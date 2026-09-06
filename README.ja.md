@@ -8,7 +8,7 @@
 
 > **商品を「売れる」詳細ページに — スペック表ではなく、検証済みの画像カットシートを。**
 
-商品の事実を渡すだけで、韓国コマースが実際に使っている形式が返ってきます。コピーを画像の中に入れた 12~20 枚の縦積みイメージカットに、HTML の法定表示ブロックを添えて。すべての主張は入力に遡って裏づけられます。
+商品の情報から、コピー入りの画像カット 10~20 枚と HTML の法定表示を作成します。数値を含む文は原資料との一致、または対象・単位・条件を確認した出典リンクが必要です。自動検査は事実の真偽や計算の正しさを保証しません。画像の検収と公開可否は別途判断します。
 
 [クイックスタート](#クイックスタート) • [なぜ sangse なのか](#なぜ-sangse-なのか-이런-분을-위한-도구입니다) • [仕組み](#仕組み) • [機能](#機能) • [動作要件](#動作要件-요구사항)
 
@@ -94,8 +94,8 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · scorecard
 
 | 機能 | 説明 |
 |---------|-------------|
-| 画像カットシート形式 | 12~20 カット、幅 1000 px、コピーは画像内に描画。価格・電話番号・栄養成分表・法定表示は HTML に残す |
-| 実測済み 29 種のカットテンプレート | 実際のページを解剖 — Kurly、Coupang、ブランドモール、Samsung、LG、Musinsa（ファッション）、Kmong（サービス） |
+| 画像カットシート形式 | 10~20 カット、幅 1000 px 基準。生成後の解像度を確認し、コピーは画像内に描画。価格・電話番号・栄養成分表・法定表示は HTML に残す |
+| 44 種のカットテンプレート | 実際のページを解剖 — Kurly、Coupang、ブランドモール、Samsung、LG、Musinsa（ファッション）、Kmong（サービス） |
 | 不確実性駆動のインタビュー | 入力から推測できないことだけを質問。最大 4 問 × 2 ラウンド |
 | コピー前のオファーチェック | 弱いオファーは、コピーを 1 行も書く前に指摘 |
 | GPT 推敲パス | 別モデル（Codex CLI）が各カットの言いたいことを解釈し、AI 臭（翻訳調、広告の常套句、単調なリズム、ぼかし表現 — humanize-korean の規則を借用）を除いて書き直す。数値の追加、プレースホルダーの欠落、スロット超過、禁止語の混入があるカットはコードが拒否して原文を保持 |
@@ -135,7 +135,7 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · scorecard
 |---|---|
 | `commands/sangse.md` | 単一エントリーポイント（`/sangse`）、引数ルーティング |
 | `skills/sangse/SKILL.md` | ワークフロー（Step 0 → インタビュー → オファーチェック → カットシート → 3 ゲート → 画像 → HTML → レポート）、鉄の掟、レッドフラグ |
-| `skills/sangse/references/` | `framework.md`（8 つの質問）、`cut-sheet.md`、`reference-patterns.md`（実ページ 7 件の解剖、29 テンプレート）、`interview.md`、`humanize.md`（GPT 書き直しプロンプト + ガード）、`style-packs.md`（6 パック・推奨ルール・共通文法）、`compliance.md`、`verification.md`、`evidence.md`、`image-briefs.md`、`reference-capture.md` |
+| `skills/sangse/references/` | `framework.md`（8 つの質問）、`cut-sheet.md`、`reference-patterns.md`（ページ分析）、`interview.md`、`humanize.md`（GPT 書き直しプロンプト + ガード）、`numerical-provenance.md`（出典リンク）、`style-packs.md`（6 パック・カタログ全 44 テンプレート）、`compliance.md`、`verification.md`、`evidence.md`、`image-briefs.md`、`reference-capture.md` |
 | `skills/sangse/scripts/` | `check_deps.sh`、`humanize_cuts.py`、`check_cuts.py`、`check_copy.py`、`assemble_html.py`、`render_check.py`、`capture_reference.js` |
 | `skills/sangse/assets/` | `cut-templates.json`、`banned-words.json`、`humanize-schema.json`、`style-packs/*.json`（6 パック + スキーマ）、`template.html` |
 | `setup/` | 初回セットアップ（gptaku 標準） |

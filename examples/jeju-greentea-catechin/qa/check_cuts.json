@@ -1,11 +1,12 @@
 {
-  "path": "/Users/chulrolee/.claude/skills/sangse/examples/jeju-greentea-catechin/cuts.md",
+  "path": "/Users/chulrolee/gptaku_plugins/plugins/sangse/examples/jeju-greentea-catechin/cuts.md",
   "cuts": 14,
   "category": [
     "common",
     "health_food"
   ],
   "platform": "smartstore",
+  "style": null,
   "checks": [
     {
       "id": "T1",
@@ -36,7 +37,7 @@
     {
       "id": "T5",
       "status": "PASS",
-      "message": "모든 숫자가 입력에 존재",
+      "message": "정량 문장 출처 연결 PASS",
       "detail": []
     },
     {

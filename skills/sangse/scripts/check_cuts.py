@@ -9,7 +9,7 @@
   T2  헤드라인 행 수·행당 글자 수, body 줄 수·줄당 글자 수가 템플릿 한도 안 (공백 제외 글자 수)
   T3  컷 수 10~20, Q1~Q8 각각 최소 1컷(Q4·Q8은 자료 없으면 생략 허용 → WARN), 순서가 Q1/Q2 → … → Q7/Q8 흐름
   T4  첫 컷(anchor)이 K2 또는 K1, 각 컷 bg 지정, K4에 footnote, K7 body에 고시 문구 포함(health_food)
-  T5  cuts.md + legal.md의 숫자가 raw-input.md/intake-checklist.md에 존재(파생 계산식 허용)
+  T5  수치 문장 전체를 입력 원문 또는 출처 연결된 정량 사실과 대조(수치·단위·문맥 보존)
   T6  카테고리 금지어(assets/banned-words.json) — cuts.md 전체 + legal.md
   T7  legal.md 필수 블록 존재(카테고리별) — 없으면 FAIL, 내용이 [자료 필요]면 INFO
   T8  style: 헤더가 있으면 팩(assets/style-packs) 필수 템플릿 순서 대조(WARN), 팩 미존재 FAIL
@@ -23,6 +23,12 @@ import struct
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+# PEP 366: support both direct CLI execution and package imports.
+if not __package__:
+    sys.path.insert(0, os.path.dirname(HERE))
+    __package__ = "scripts"
+from .numerical_provenance import check_numbers
+
 TEMPLATES = json.load(open(os.path.join(HERE, "..", "assets", "cut-templates.json"), encoding="utf-8"))["templates"]
 BANNED = json.load(open(os.path.join(HERE, "..", "assets", "banned-words.json"), encoding="utf-8"))
 CUT_RE = re.compile(r"^##\s*(C\d{2})\s*[·•\-]\s*([A-Z]\d{1,2})\s*[·•\-]\s*((?:Q\d(?:[·/,]Q\d)*|brand))\s*[·•\-]\s*h\s*=\s*(\d+)\s*$", re.MULTILINE)
@@ -115,10 +121,10 @@ def main():
         print(f"ERROR: {cp} 없음", file=sys.stderr); sys.exit(2)
     md = open(cp, encoding="utf-8").read()
     legal = open(os.path.join(base, "legal.md"), encoding="utf-8").read() if os.path.exists(os.path.join(base, "legal.md")) else ""
-    sources = ""
+    sources = {}
     for n in ("raw-input.md", "intake-checklist.md"):
         p = os.path.join(base, n)
-        if os.path.exists(p): sources += open(p, encoding="utf-8").read() + "\n"
+        if os.path.exists(p): sources[n] = open(p, encoding="utf-8").read()
 
     checks = []
     def add(cid, st, msg, detail=None): checks.append({"id": cid, "status": st, "message": msg, "detail": detail or []})
@@ -181,17 +187,9 @@ def main():
             body = " ".join(f.get("body", []) if isinstance(f.get("body"), list) else [f.get("body", "")])
             if "도움을 줄 수 있음" not in body and "도움을 줄 수 있" not in body: bad.append(f"{c['id']}: K7에 고시 기능성 문구 없음")
     add("T4", "FAIL" if bad else "PASS", "앵커·배경·법정 가드", bad)
-    # T5 numbers
-    text = PH_RE.sub("", md + "\n" + legal)
-    text = re.sub(r"(?m)^\s*\d+\.\s", "", text)
-    text = re.sub(r"(?m)^## C\d{2}.*$", "", text)
-    text = re.sub(r"h\s*=\s*\d+", "", text)
-    text = re.sub(r"#[0-9A-Fa-f]{3,6}", "", text)
-    text = re.sub(r"(?m)^(width|platform|anchor|image|visual|text_pos|brand|tone|style):.*$", "", text)  # 지시문·메타는 카피가 아님
-    src_digits = {re.sub(r"[,\s]", "", d) for d in re.findall(r"\d[\d,\.]*", sources)}
-    untraced = sorted({tok for tok in re.findall(r"\d[\d,\.]*", text) if not (len(re.sub(r"[,\s]", "", tok)) == 1 and tok in "1234") and re.sub(r"[,\s]", "", tok) not in src_digits})
-    if not sources: add("T5", "WARN", "raw-input/intake 없음 — 출처 추적 불가")
-    else: add("T5", "FAIL" if untraced else "PASS", f"출처 없는 숫자 {len(untraced)}개" if untraced else "모든 숫자가 입력에 존재", untraced)
+    # T5: see references/numerical-provenance.md for the explicit review boundary.
+    status, detail = check_numbers(cuts, legal, sources)
+    add("T5", status, "정량 문장 출처 연결 " + status, detail)
     # T6 banned
     clean = PH_RE.sub("", md + "\n" + legal)
     fails, warns = [], []

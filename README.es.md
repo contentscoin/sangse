@@ -8,7 +8,7 @@
 
 > **Convierte un producto en una página de detalle que vende — una hoja de cortes de imagen verificada, no una ficha técnica.**
 
-Dale los datos del producto. Recibe el formato que el comercio coreano usa de verdad: 12~20 cortes de imagen apilados verticalmente con el copy dentro de la imagen, más un bloque legal en HTML — cada afirmación rastreada hasta tu input.
+Dale los datos del producto. Recibe 10~20 cortes de imagen con el copy integrado y un bloque legal en HTML. Las frases cuantitativas requieren coincidencia con la fuente o un vínculo revisado que conserve atributo, unidad y condiciones. El validador no garantiza la veracidad ni verifica cálculos; la aprobación visual y la preparación para publicar son evaluaciones separadas.
 
 [Inicio rápido](#inicio-rápido) • [¿Por qué sangse?](#por-qué-sangse-이런-분을-위한-도구입니다) • [Cómo funciona](#cómo-funciona) • [Características](#características) • [Requisitos](#requisitos-요구사항)
 
@@ -94,8 +94,8 @@ Los cortes siguen las **8 preguntas que un cliente se hace en silencio antes de 
 
 | Característica | Descripción |
 |---------|-------------|
-| Formato de hoja de cortes de imagen | 12~20 cortes, 1000 px de ancho, copy renderizado dentro de la imagen; precios, teléfonos, tablas nutricionales y avisos legales se quedan en HTML |
-| 29 plantillas de corte medidas | Diseccionadas de páginas reales — Kurly, Coupang, una tienda de marca, Samsung, LG, Musinsa (moda), Kmong (servicios) |
+| Formato de hoja de cortes de imagen | 10~20 cortes diseñados para 1000 px; se comprueban las dimensiones generadas. Copy dentro de la imagen; precios, teléfonos, tablas nutricionales y avisos legales en HTML |
+| 44 plantillas de corte | Diseccionadas de páginas reales — Kurly, Coupang, una tienda de marca, Samsung, LG, Musinsa (moda), Kmong (servicios) |
 | Entrevista guiada por la incertidumbre | Pregunta solo lo que no puede inferirse del input; como máximo 4 preguntas × 2 rondas |
 | Comprobación de la oferta antes del copy | Las ofertas débiles se señalan antes de escribir una sola línea de copy |
 | Pase de humanización con GPT | Un segundo modelo (Codex CLI) interpreta qué quiere decir cada corte y lo reescribe sin marcas de IA (calcos de traducción, clichés publicitarios, ritmo uniforme, rodeos — reglas tomadas de humanize-korean); las guardas de código rechazan cualquier corte que añada una cifra, pierda un marcador, desborde un slot o introduzca una palabra prohibida |
@@ -135,7 +135,7 @@ Nada de esto es asesoramiento legal; la redacción final queda sujeta al organis
 |---|---|
 | `commands/sangse.md` | Punto de entrada único (`/sangse`), enrutamiento de argumentos |
 | `skills/sangse/SKILL.md` | Flujo de trabajo (Step 0 → entrevista → comprobación de la oferta → hoja de cortes → 3 puertas → imágenes → HTML → informe), Ley de Hierro, señales de alerta |
-| `skills/sangse/references/` | `framework.md` (8 preguntas), `cut-sheet.md`, `reference-patterns.md` (7 páginas reales diseccionadas, 29 plantillas), `interview.md`, `humanize.md` (prompt de reescritura GPT + guardas), `style-packs.md` (6 packs, reglas de recomendación, gramática), `compliance.md`, `verification.md`, `evidence.md`, `image-briefs.md`, `reference-capture.md` |
+| `skills/sangse/references/` | `framework.md` (8 preguntas), `cut-sheet.md`, `reference-patterns.md` (análisis de páginas), `interview.md`, `humanize.md` (prompt de reescritura GPT + guardas), `numerical-provenance.md` (contrato de fuentes), `style-packs.md` (6 packs, 44 plantillas en el catálogo), `compliance.md`, `verification.md`, `evidence.md`, `image-briefs.md`, `reference-capture.md` |
 | `skills/sangse/scripts/` | `check_deps.sh`, `humanize_cuts.py`, `check_cuts.py`, `check_copy.py`, `assemble_html.py`, `render_check.py`, `capture_reference.js` |
 | `skills/sangse/assets/` | `cut-templates.json`, `banned-words.json`, `humanize-schema.json`, `style-packs/*.json` (6 packs + esquema), `template.html` |
 | `setup/` | Configuración de primera ejecución (estándar gptaku) |

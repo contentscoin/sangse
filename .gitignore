@@ -9,3 +9,13 @@ __pycache__/
 .imagen-full/
 RESEARCH/
 /sangse/
+
+# Raw agent/provider sessions are local evidence, not release contents.
+/examples/**/qa/**/*.log
+/examples/**/qa/**/*.jsonl
+/examples/**/qa/**/*-stdout.txt
+!/examples/reference-offer-first/qa/humanize-tests.log
+!/examples/reference-offer-first/qa/numerical-tests.log
+!/examples/reference-offer-first/qa/humanize-fixture-apply.log
+!/examples/reference-offer-first/qa/humanize-fixture-final-generation.log
+!/examples/reference-offer-first/qa/gate1-fixture.log

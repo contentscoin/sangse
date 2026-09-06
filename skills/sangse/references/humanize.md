@@ -9,13 +9,18 @@
 ## 2. 실행
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/sangse/scripts/humanize_cuts.py "sangse/{slug}" --category {common|food|health_food|cosmetics} [--apply] [--model <codex model>]
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/sangse/scripts/humanize_cuts.py "sangse/{slug}" --category {common|food|health_food|cosmetics} [--model <codex model>]
+# diff 검토 후, 생성 옵션 없이 저장된 미리보기만 승인
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/sangse/scripts/humanize_cuts.py "sangse/{slug}" --apply
 ```
 
-- 기본은 **미적용**: `cuts.humanized.md`와 `qa/humanize.json`(컷별 판정·변경률·거부 사유·GPT의 의미 해석)을 쓴다. Claude는 diff를 훑어 보고, 문제없으면 `--apply`로 다시 실행하거나 `cuts.humanized.md`를 `cuts.md`로 옮긴다. `--apply`는 원본을 `cuts.original.md`로 남긴다.
+- 기본은 **미적용**: `cuts.humanized.md`와 `qa/humanize.json`(컷별 판정·변경률·거부 사유·GPT의 의미 해석)을 쓴다. 보고서의 `source_sha256`은 생성 당시 `cuts.md` 바이트, `output_sha256`은 미리보기 바이트에 결합된다. intake 변경은 이 해시 범위에 포함하지 않는다.
+- diff를 검토한 뒤 **`--apply`만** 실행한다. 저장된 두 파일을 검증·적용할 뿐, Codex·프롬프트 조립·재생성을 호출하지 않아 모델이 없어도 된다. `cuts.original.md`는 없을 때만 생성하고 기존 백업은 보존한다. 같은 결과를 두 번 적용하면 파일을 다시 쓰지 않고 성공한다.
+- 원문 변경은 `SOURCE_MISMATCH`, 미리보기 수정은 `OUTPUT_MISMATCH`, 파일 누락·해시 없는 구형 보고서는 `PREVIEW_INVALID`로 실패한다. 다시 생성하고 diff를 검토해야 한다. 미리보기를 직접 복사해 검증을 우회하지 않는다.
+- 승인 인자는 `<폴더> --apply`만 허용한다. 생성 옵션, 알 수 없는 옵션(`--help` 포함), 추가 위치 인자, 중복 `--apply`는 모두 파일을 바꾸기 전에 `APPLY_FLAGS` 입력 오류로 거부한다. 생성과 승인은 별도 명령이다.
 - 컷별 가드에 걸린 컷은 **원문 유지**, `qa/humanize.json`의 `rejected`에 사유가 남는다. 전체 실패가 아니다.
 - `--dry-run`은 프롬프트만 출력한다(네트워크 없음). `--from-json <file>`은 GPT 응답 대신 파일을 읽는다(테스트용).
-- 백엔드는 Codex CLI(`codex exec`, 응답 스키마 `assets/humanize-schema.json`은 프롬프트에 인라인). `--output-schema`는 쓰지 않는다 — opencodex류 로컬 프록시가 구조화 출력을 못 받아 스트림이 끊기는 것을 실측(2026-09-03). env 프록시는 pumasi:image와 같은 이유로 우회한다(`SANGSE_KEEP_PROXY=1`로 해제). codex가 없으면 이 단계를 건너뛰고 보고에 "윤문 생략(codex 없음)"을 적는다 — Iron Law보다 우선하는 단계는 아니다.
+- 백엔드는 Codex CLI(`codex exec`, 응답 스키마 `assets/humanize-schema.json`은 프롬프트에 인라인). `--output-schema`는 쓰지 않는다 — opencodex류 로컬 프록시가 구조화 출력을 못 받아 스트림이 끊기는 것을 실측(2026-09-03). env 프록시는 pumasi:image와 같은 이유로 우회한다(`SANGSE_KEEP_PROXY=1`로 해제). 새 결과를 생성할 때 codex가 없으면 이 단계를 건너뛰고 보고에 "윤문 생략(codex 없음)"을 적는다 — Iron Law보다 우선하는 단계는 아니다.
 
 ## 3. 컷별 가드 (코드가 판정, 위반 = 그 컷 원문 유지)
 
@@ -24,7 +29,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/sangse/scripts/humanize_cuts.py "sangse/{sl
 | 숫자 | 재생성문의 모든 숫자(숫자만, 조사·단위 제외)는 원본 `cuts.md` 어딘가에 있어야 한다. 새 숫자 = 지어낸 근거. 숫자+단위 토큰이 새로 생기면(`10 mL`→`10일` 류) 거부 대신 `unit_warnings`로 기록 — 게이트 1·리뷰어가 본다 |
 | 플레이스홀더 | 원문 컷의 `[자료 필요: …]`·`[선택: …]` 토큰은 글자 그대로 남아야 한다 |
 | 슬롯 한도 | `assets/cut-templates.json`의 headline_max(행당, 최대 3행)·sub_max·body_lines_max·line_max(공백 제외 글자 수) |
-| 금지어 | `assets/banned-words.json` 해당 카테고리 `ban` 단어가 원문에 없었는데 새로 생기면 거부 |
+| 금지어 | `assets/banned-words.json` 해당 카테고리 `ban`을 정규식으로 검사한다. 원문에 매칭이 없던 패턴이 새로 매칭되면 거부 (`세계 최초`·`世界 최초`, `피로가 사라져요` 포함) |
 | 필드 | headline·sub·body·footnote·cta만 바뀐다. template·Q·h·bg·visual·image·text_pos·tags·persona는 원본에서 그대로 복사 |
 | 변경률 | 전체 글자 변경률을 `qa/humanize.json`에 기록. 50% 초과면 경고(적용은 막지 않음 — 짧은 카피는 재생성 자체가 큰 변경이다). Claude가 diff를 보고 판단한다 |
 
@@ -74,5 +79,5 @@ JSON 하나만 출력한다(스키마는 별도 제공). 컷 id마다 `meaning`(
 ## 5. Claude가 결과를 볼 때
 
 - `qa/humanize.json`의 `meaning`을 먼저 읽는다 — GPT의 해석이 Claude의 의도와 다르면 그 컷은 원문 유지(해석이 틀렸으면 재생성도 틀렸다).
-- `rejected` 사유가 "슬롯 한도"면 GPT 문장을 Claude가 한도 안으로 다듬어 채택할 수 있다. "숫자"·"금지어"면 채택 금지.
+- `rejected` 사유가 "슬롯 한도"면 GPT 응답을 한도 안으로 다듬어 `--from-json`으로 미리보기를 다시 생성·검토할 수 있다. 저장된 `cuts.humanized.md`를 직접 수정하면 적용이 거부된다. "숫자"·"금지어"면 채택 금지.
 - Step 7 카피 승인 게이트의 요약에 "윤문: 채택 n/총 컷, 거부 m(사유)"를 넣는다.

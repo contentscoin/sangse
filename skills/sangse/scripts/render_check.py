@@ -8,7 +8,8 @@
   - Playwright(Node)로 index.html을 열어 각 폭에서 첫 화면(높이 844) 스크린샷을 qa/render-{w}.png에 저장.
     --full 이면 qa/render-{w}-full.png(전체 페이지)도 저장.
   - 계측: 가로 스크롤 여부(scrollWidth > viewport), 첫 화면 안에 Q1 h2가 있는지, 첫 두 화면(1688px) 안에 CTA가 있는지,
-    플레이스홀더(.todo) 개수, 이미지 로드 실패 수. 결과를 qa/render_check.json으로 저장하고 FAIL이면 exit 1.
+    모든 컷의 실측 폭이 main 폭과 일치하는지(1px 허용), 플레이스홀더(.todo) 개수, 이미지 로드 실패 수.
+    결과를 qa/render_check.json으로 저장하고 FAIL이면 exit 1.
   - 헤드리스 Chrome CLI(--window-size)는 최소 창 폭이 500px라 390 스크린샷이 잘려 보이는 함정이 있다. 이 스크립트는
     Playwright의 viewport 에뮬레이션을 쓰므로 그 문제가 없다.
 
@@ -39,19 +40,37 @@ try { pw = require('playwright'); } catch (e) { try { pw = require('patchright')
     const failed = [];
     page.on('requestfailed', r => failed.push(r.url()));
     await page.goto(url, { waitUntil: 'load' });
-    // lazy 이미지는 스크롤 전엔 로드되지 않아 무한 대기가 된다 → eager로 바꾸고 5초 상한으로 기다린다
-    await page.evaluate(() => { for (const i of document.images) { i.loading = 'eager'; if (i.src) { const s = i.src; i.src = ''; i.src = s; } } });
-    await Promise.race([
-      page.evaluate(() => Promise.all([...document.images].map(i => i.complete ? null : new Promise(r => { i.onload = i.onerror = r; })))),
-      page.waitForTimeout(5000),
-    ]);
-    await page.waitForTimeout(200);
+    // Subscribe before eager loading; cached images settle immediately, stalled loads fail after 5s.
+    await page.evaluate(() => Promise.all([...document.images].map(image => new Promise((resolve, reject) => {
+      const cleanup = () => {
+        clearTimeout(timer);
+        image.removeEventListener('load', done);
+        image.removeEventListener('error', done);
+      };
+      const done = () => { cleanup(); resolve(); };
+      const timer = setTimeout(() => {
+        cleanup();
+        reject(new Error(`Image load timed out: ${image.currentSrc || image.src}`));
+      }, 5000);
+      image.addEventListener('load', done, { once: true });
+      image.addEventListener('error', done, { once: true });
+      image.loading = 'eager';
+      if (image.complete) done();
+    }))));
     const m = await page.evaluate(() => {
       const vw = window.innerWidth;
       const cutsMode = !!document.querySelector('.cutsheet');
-      const firstCut = document.querySelector('.cutsheet > .cut, .cutsheet > .cut-ph');
+      const cuts = [...document.querySelectorAll('.cutsheet > .cut, .cutsheet > .cut-ph')];
+      const firstCut = cuts[0];
+      const mainWidth = document.querySelector('main').getBoundingClientRect().width;
+      const cutMeasurements = cuts.map(cut => ({ id: cut.id, width: cut.getBoundingClientRect().width }));
+      const cutWidthMismatches = cutMeasurements.filter(cut => Math.abs(cut.width - mainWidth) > 1);
+      const imageWidthMismatches = cuts.flatMap(cut => [...cut.querySelectorAll('img')]
+        .map(image => ({ id: cut.id, width: image.getBoundingClientRect().width })))
+        .filter(image => Math.abs(image.width - mainWidth) > 1);
       const h2 = cutsMode ? (firstCut ? firstCut : null) : document.querySelector('#q1 h2');
-      const cta = cutsMode ? (document.querySelector('.cutsheet [data-q*="Q8"], .cutsheet [data-q*="Q7"]') || document.querySelector('.cta')) : document.querySelector('.cta');
+      const closingCut = document.querySelector('.cutsheet [data-q*="Q8"], .cutsheet [data-q*="Q7"]');
+      const cta = document.querySelector('.cta');
       const imgs = [...document.images];
       return {
         vw,
@@ -59,11 +78,19 @@ try { pw = require('playwright'); } catch (e) { try { pw = require('patchright')
         horizontalScroll: document.documentElement.scrollWidth > vw + 1,
         q1HeadlineTop: h2 ? Math.round(h2.getBoundingClientRect().top) : null,
         cutsMode,
+        mainWidth,
+        cutWidths: cutMeasurements.map(cut => cut.width),
+        cutWidthMismatches,
+        imageWidthMismatches,
+        cutsFillMainWidth: cuts.length > 0 && cutWidthMismatches.length === 0 && imageWidthMismatches.length === 0,
         cutCount: document.querySelectorAll('.cutsheet > .cut').length,
         placeholderCuts: document.querySelectorAll('.cutsheet > .cut-ph').length,
         q1HeadlineInFirstViewport: h2 ? (cutsMode ? h2.getBoundingClientRect().top <= 100 : h2.getBoundingClientRect().bottom <= 844) : false,
+        closingCutPresent: !!closingCut,
+        closingCutTop: closingCut ? Math.round(closingCut.getBoundingClientRect().top + window.scrollY) : null,
+        ctaPositionStatus: cutsMode && !cta ? 'manual_review' : 'measured',
         firstCtaTop: cta ? Math.round(cta.getBoundingClientRect().top + window.scrollY) : null,
-        ctaInFirstTwoViewports: cta ? (cutsMode ? true : (cta.getBoundingClientRect().top + window.scrollY) <= 1688) : false,
+        ctaInFirstTwoViewports: cta ? (cta.getBoundingClientRect().top + window.scrollY) <= 1688 : (cutsMode ? null : false),
         placeholders: document.querySelectorAll('.todo, .todo-inline').length,
         brokenImages: imgs.filter(i => !i.complete || i.naturalWidth === 0).length,
         imageCount: imgs.length,
@@ -111,11 +138,13 @@ def main():
 
     checks = []
     for w, m in data.items():
-        fails = []
+        fails: list[str] = []
         if m["horizontalScroll"]: fails.append(f"가로 스크롤 (scrollWidth {m['scrollWidth']} > {m['vw']})")
         if m.get("cutsMode"):
+            if not m["cutsFillMainWidth"]:
+                fails.append(f"컷·이미지 폭이 main {m['mainWidth']}px와 불일치: {m['cutWidthMismatches'] + m['imageWidthMismatches']}")
             if not m["q1HeadlineInFirstViewport"]: fails.append("첫 컷이 첫 화면 상단에 없음")
-            if not m["ctaInFirstTwoViewports"]: fails.append("Q7/Q8 컷(보증·CTA) 없음")
+            if not m["closingCutPresent"]: fails.append("Q7/Q8 컷(보증·CTA) 없음")
             if m.get("placeholderCuts"): fails.append(f"이미지 미생성 컷 {m['placeholderCuts']}개 (텍스트 플레이스홀더 렌더)")
         else:
             if not m["q1HeadlineInFirstViewport"]: fails.append(f"Q1 헤드라인이 첫 화면 밖 (top={m['q1HeadlineTop']})")

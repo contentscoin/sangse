@@ -63,7 +63,7 @@ for ex in "${FIXTURES[@]}"; do
     bad "assemble_html.py" "exit=$rc — $(tail -1 "$W/.asm.err" 2>/dev/null)"
   fi
   n_cuts=$(grep -c '^## C[0-9][0-9]' "$W/cuts.md")
-  n_img=$(grep -o '<img[^>]*src="images/c[0-9][0-9]\.png"' "$W/index.html" 2>/dev/null | wc -l | tr -d ' ')
+  n_img=$(grep -Eo '<img[^>]*src="images/c[0-9][0-9]\.(png|jpg|jpeg)"' "$W/index.html" 2>/dev/null | wc -l | tr -d ' ')
   if [ "$n_img" -eq "$n_cuts" ] && [ "$n_cuts" -ge 10 ]; then
     ok "index.html에 컷 이미지 $n_img/$n_cuts 전부 삽입"
   else
@@ -158,13 +158,35 @@ fi
 echo "[스타일 팩 변형 예시 — 6팩 게이트 1 + T8]"
 for v in story-first:health_food:smartstore checkpoint:health_food:smartstore proof-first:health_food:smartstore lookbook:common:web spec-showcase:common:smartstore offer-first:common:web; do
   IFS=: read -r vp vc vpl <<<"$v"; VD="$TMP/var-$vp"; mkdir -p "$VD"; cp -R "$EXAMPLES/style-pack-variants/$vp/." "$VD/"
-  for f in raw-input.md intake-checklist.md legal.md; do [ -f "$VD/$f" ] || cp "$EXAMPLES/punggi-red-ginseng-stick/$f" "$VD/"; done
   if python3 "$SCRIPTS/check_cuts.py" "$VD" --category "$vc" --platform "$vpl" --json >"$VD/.v.json" 2>/dev/null && python3 -c "import json,sys;d=json.load(open(sys.argv[1]));t=[c for c in d['checks'] if c['id']=='T8'];sys.exit(0 if d['verdict']=='PASS' and t and t[0]['status']=='PASS' else 1)" "$VD/.v.json"; then
     ok "variants/$vp: 게이트 1 PASS + T8 팩 시퀀스 일치"
   else
     bad "variants/$vp" "$(python3 -c "import json,sys;d=json.load(open(sys.argv[1]));print([c for c in d['checks'] if c['status']!='PASS'][:2])" "$VD/.v.json" 2>/dev/null | cut -c1-200)"
   fi
 done
+
+echo "[숫자 출처 회귀]"
+if python3 -m unittest discover -s "$PLUGIN_DIR/tests" -p 'test_numerical_provenance.py' -v; then
+  ok "숫자·단위·항목 출처 회귀"
+else
+  bad "숫자 출처 회귀" "위 실패 출력 참조"
+fi
+
+echo "[윤문 승인 회귀]"
+if python3 -m unittest discover -s "$PLUGIN_DIR/tests" -p 'test_humanize_approval.py' -v; then
+  ok "윤문 금지어·미리보기 승인 회귀"
+else
+  bad "윤문 승인 회귀" "위 실패 출력 참조"
+fi
+
+if [[ "${SANGSE_RENDER_TESTS:-0}" == "1" ]]; then
+  echo "[브라우저 렌더 회귀]"
+  if python3 -m unittest discover -s "$PLUGIN_DIR/tests" -p 'test_render_contract.py' -v; then
+    ok "컷 폭·CTA 지표 브라우저 회귀"
+  else
+    bad "브라우저 렌더 회귀" "위 실패 출력 참조"
+  fi
+fi
 
 echo "[의존성 점검]"
 if bash "$SCRIPTS/check_deps.sh" >"$TMP/deps.out" 2>&1; then

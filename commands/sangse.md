@@ -1,6 +1,6 @@
 ---
 name: sangse
-description: "제품 정보를 이미지 컷 시트 상세페이지로 — 8질문 카피, 컴플라이언스, 3중 검증"
+description: "제품 정보를 이미지 컷 시트 상세페이지로 - 8질문 카피, 컴플라이언스, 3중 검증"
 argument-hint: "[제품 정보 텍스트·파일 경로·URL | 카피만 | 스마트스토어용 | --style <pack> | check <dir> | humanize <dir>]"
 allowed-tools:
   - Bash
@@ -15,20 +15,20 @@ allowed-tools:
 ---
 
 <!-- first-run setup: idempotent, non-blocking, self-skips after first run -->
-**Step 0 — run once at the very start, before anything else:** run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" ask`. If its output starts with `STAR_ASK`, immediately call the **AskUserQuestion** tool once, with the question and options phrased **in the user's language**: prefer the current conversation's language if it is evident; otherwise fall back to the language code that follows `STAR_ASK` in the output (`ko`→Korean, `ja`→Japanese, `en`→English). Never default to Korean blindly.
+**Step 0 - run once at the very start, before anything else:** run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" ask`. If its output starts with `STAR_ASK`, immediately call the **AskUserQuestion** tool once, with the question and options phrased **in the user's language**: prefer the current conversation's language if it is evident; otherwise fall back to the language code that follows `STAR_ASK` in the output (`ko`→Korean, `ja`→Japanese, `en`→English). Never default to Korean blindly.
 - header: a short localized "GitHub Star" label
-- question: ask whether they'd like to give this plugin (and the gptaku-plugins marketplace) a GitHub ⭐ to support it — note it is optional and every feature works either way
-- options: exactly two — (1) yes, star it → then run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" star yes`; (2) no thanks → then run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" star no`
+- question: ask whether they'd like to give this plugin (and the gptaku-plugins marketplace) a GitHub ⭐ to support it - note it is optional and every feature works either way
+- options: exactly two - (1) yes, star it → then run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" star yes`; (2) no thanks → then run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" star no`
 
 If the output is empty, just continue silently. (AskUserQuestion must NOT be in frontmatter allowed-tools.) Do not narrate beyond the question itself.
 
 # /sangse
 
-> **Language (shared/language-policy.md)**: lock `output_lang` to the language of the request text (or, if none, the conversation so far) before reading anything else. Every user-facing output — replies, AskUserQuestion `question`/`header`/`label`/`description`, and files written to disk (`cuts.md`, `legal.md`, the report) — follows `output_lang`. The JSON below is a template: translate its labels, never emit it verbatim in another language. Identifiers, file names, commands and the `[자료 필요: …]` token are not translated. Do not default to Korean because the plugin was made in Korea.
+> **Language (shared/language-policy.md)**: lock `output_lang` to the language of the request text (or, if none, the conversation so far) before reading anything else. Every user-facing output - replies, AskUserQuestion `question`/`header`/`label`/`description`, and files written to disk (`cuts.md`, `legal.md`, the report) - follows `output_lang`. The JSON below is a template: translate its labels, never emit it verbatim in another language. Identifiers, file names, commands and the `[자료 필요: …]` token are not translated. Do not default to Korean because the plugin was made in Korea.
 >
 > **Questioning (shared/questioning-policy.md)**: ask only slots that cannot be inferred from the input (target, platform, traffic source, proof, refund policy, regulated category); at most 4 questions per round, 2 rounds. If the input already answers a slot, do not ask it.
 
-Build a Korean e-commerce detail page as an **image cut sheet**: 12~20 vertically stacked cuts (headline, sub, body inside the image, Kurly/Coupang/Smart Store convention) plus an HTML legal block, following the "8 questions a customer silently asks before paying" order.
+Build a Korean e-commerce detail page as an **image cut sheet**: 10~20 vertically stacked cuts (headline, sub, body inside the image, Kurly/Coupang/Smart Store convention) plus an HTML legal block, following the "8 questions a customer silently asks before paying" order.
 
 ## Parse Arguments
 
@@ -37,12 +37,12 @@ Inspect `$ARGUMENTS`:
 | Argument pattern | Action |
 |---|---|
 | product info (text, file path, URL) | Run the `sangse` skill from Step 0 (dependency check) → Step 1 (collect) |
-| contains `카피만` / `copy only` | Same, but stop after the copy approval gate — no image generation |
+| contains `카피만` / `copy only` | Same, but stop after the copy approval gate - no image generation |
 | contains `스마트스토어` / `크몽` / `웹` | Pre-set the platform, skip that interview question |
 | contains `--style <id>` or a pack display name (고민 장면 스토리형 / 핵심 포인트 체크리스트형 / 근거·수치 우선형 / 룩북형 / 스펙 쇼케이스형 / 혜택·구성 프로모션형) | Pre-set the style pack (`assets/style-packs/<id>.json`), skip the Q-스타일 question |
-| `check <dir>` | Run only the verification gates on an existing `sangse/{slug}` folder (check_cuts.py → render_check.py) |
-| `humanize <dir>` | Run only Step 4-1 (GPT humanize via `humanize_cuts.py`) on an existing folder, show `qa/humanize.json`, then `--apply` on approval |
-| (no argument) | Ask for product info with AskUserQuestion — see below |
+| `check <dir>` | Verify the current folder in its actual mode: gate 1 (`check_cuts.py`, or `check_copy.py` only for legacy mode), gate 2 review of those inputs, then gate 3 if HTML/images exist. Report missing stages as pending, not PASS. |
+| `humanize <dir>` | Generate the Step 4-1 preview, show its diff and `qa/humanize.json`, then apply that saved, hashed preview on approval using only `<dir> --apply`. No generation flags or manual file moves. |
+| (no argument) | Ask for product info with AskUserQuestion - see below |
 
 ## No argument
 
@@ -68,4 +68,16 @@ Inspect `$ARGUMENTS`:
 
 ## Execute
 
-Follow `${CLAUDE_PLUGIN_ROOT}/skills/sangse/SKILL.md` exactly — Step 0 dependency check, product interview (only the uncertain slots), offer check, cut sheet (`cuts.md` + `legal.md`), Step 4-1 humanize (`humanize_cuts.py` — GPT rewrites the copy, per-cut guards), gate 1 (`check_cuts.py`), gate 2 (4 simulated reviewers), copy approval, cut images via `/pumasi:image` (anchor → `--ref` chain, text + physical-plausibility inspection), HTML assembly, gate 3 (render + 5-second test), scorecard report. Never invent facts that are not in the input; leave `[자료 필요: …]` placeholders.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/sangse/SKILL.md` exactly - Step 0 dependency check, product interview (only the uncertain slots), offer check, cut sheet (`cuts.md` + `legal.md`), Step 4-1 humanize (`humanize_cuts.py` - GPT rewrites the copy, per-cut guards), gate 1 (`check_cuts.py`), gate 2 (4 simulated reviewers), copy approval, cut images via `/pumasi:image` (anchor → `--ref` chain, text + physical-plausibility inspection), HTML assembly, gate 3 (render + 5-second test), scorecard report. Never invent facts that are not in the input; leave `[자료 필요: …]` placeholders.
+
+In cut mode, gate 2 and copy approval use `cuts.md` + `legal.md` + `raw-input.md` + `intake-checklist.md`. Use `copy.md` only in legacy paragraph mode. Before gate 1, follow `references/numerical-provenance.md`: review quantitative rewordings against exact source statements and record destination-scoped `quantitative-facts` approvals in intake. Derived calculations need their operands, formula, units and rounding reviewed by a human. The gate checks source links, not arithmetic or real-world truth.
+
+After reviewing the preview, apply it without `--category`, `--model`, `--timeout`, `--dry-run` or `--from-json`:
+
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/sangse/scripts/humanize_cuts.py "sangse/{slug}" --apply
+```
+
+A stale source or edited preview requires a new preview and review. Never move `cuts.humanized.md` over `cuts.md` to bypass hash checks. Review reports identify input paths, SHA-256 hashes, mode, plugin/script version and review date. Image reviews also identify exact image paths/hashes and the approved text snapshot. Old copy QA cannot certify replacement images.
+
+Report draft text PASS, image verification and publish readiness separately. Missing generation, unreviewed images or placeholders remain pending. Fictional examples are demonstrations, never real-world verified or publish ready.

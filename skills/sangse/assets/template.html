@@ -17,7 +17,7 @@
   p { margin: 0 0 12px; font-size: 16px; color: var(--ink); }
   ul { padding-left: 20px; margin: 0 0 12px; }
   li { margin: 4px 0; }
-  figure { margin: 0 -24px 16px; }
+  figure:not(.cut) { margin: 0 -24px 16px; }
   .sec.hero figure { margin-top: 0; }
   img { display: block; width: 100%; height: auto; }
   .cta { display: block; text-align: center; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; padding: 16px; border-radius: 12px; margin: 16px 0 0; font-size: 17px; }
@@ -39,8 +39,8 @@
   .legal h2 { font-size: 16px; margin: 0 0 10px; padding-left: 10px; border-left: 4px solid #999; }
   .todo-inline { background: var(--todo); padding: 0 4px; border-radius: 4px; color: #6b5400; }
   footer { padding: 24px; font-size: 12px; color: var(--muted); text-align: center; }
-  @media (min-width: 600px) { figure { margin: 0 auto 16px; max-width: 400px; } .sec.hero figure { margin-top: 24px; } }
-  @media (max-width: 420px) { .sec { padding: 32px 18px; } figure { margin: 0 -18px 16px; } .sec.hero h2 { font-size: 26px; } }
+  @media (min-width: 600px) { figure:not(.cut) { margin: 0 auto 16px; max-width: 400px; } .sec.hero figure { margin-top: 24px; } }
+  @media (max-width: 420px) { .sec { padding: 32px 18px; } figure:not(.cut) { margin: 0 -18px 16px; } .sec.hero h2 { font-size: 26px; } }
 </style>
 </head>
 <body>

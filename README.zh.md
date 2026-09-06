@@ -8,7 +8,7 @@
 
 > **把产品变成能卖货的详情页 — 一份经过验证的图片切图稿，而不是规格表。**
 
-给它产品事实，拿回韩国电商真正在用的格式：12~20 张纵向堆叠的图片切图，文案直接排在图内，外加一段 HTML 法务信息块 — 每一条主张都能追溯到你的输入。
+输入产品资料，生成 10~20 张纵向图片切图和 HTML 法务信息。含数字的文案必须与原始资料一致，或附上经过人工核对属性、单位和条件的来源链接。自动检查不保证事实真实性或计算正确性；图片验收和发布就绪状态需要单独判断。
 
 [快速开始](#快速开始) • [为什么选 sangse](#为什么选-sangse-이런-분을-위한-도구입니다) • [工作原理](#工作原理) • [功能](#功能) • [环境要求](#环境要求-요구사항)
 
@@ -94,8 +94,8 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · scorecard
 
 | 功能 | 说明 |
 |---------|-------------|
-| 图片切图稿格式 | 12~20 张切图，宽度 1000 px，文案渲染在图内；价格、电话号码、营养成分表和法务声明保留在 HTML 中 |
-| 29 个实测切图模板 | 从真实页面拆解而来 — Kurly、Coupang、某品牌商城、三星、LG、Musinsa（时尚）、Kmong（服务） |
+| 图片切图稿格式 | 10~20 张切图，以 1000 px 宽度设计，生成后检查实际分辨率；文案在图内，价格、电话号码、营养成分表和法务声明保留在 HTML 中 |
+| 44 个切图模板 | 从真实页面拆解而来 — Kurly、Coupang、某品牌商城、三星、LG、Musinsa（时尚）、Kmong（服务） |
 | 不确定性驱动的访谈 | 只问无法从输入推断的内容；最多 4 个问题 × 2 轮 |
 | 写文案前先做报价检查 | 在写下第一行文案之前就标出薄弱的报价 |
 | GPT 润色 | 第二个模型（Codex CLI）解读每个切图想说什么，并去掉 AI 痕迹（翻译腔、广告套话、节奏单一、含糊其辞 — 规则借自 humanize-korean）后重写；凡新增数字、丢失占位符、超出槽位或引入禁用词的切图，代码一律拒绝并保留原文 |
@@ -135,7 +135,7 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · scorecard
 |---|---|
 | `commands/sangse.md` | 单一入口（`/sangse`），参数路由 |
 | `skills/sangse/SKILL.md` | 工作流（Step 0 → 访谈 → 报价检查 → 切图稿 → 3 道关卡 → 图片 → HTML → 报告）、铁律、红旗信号 |
-| `skills/sangse/references/` | `framework.md`（8 个问题）、`cut-sheet.md`、`reference-patterns.md`（拆解 7 个真实页面，29 个模板）、`interview.md`、`humanize.md`（GPT 重写提示词 + 守卫）、`style-packs.md`（6 个风格包、推荐规则、通用语法）、`compliance.md`、`verification.md`、`evidence.md`、`image-briefs.md`、`reference-capture.md` |
+| `skills/sangse/references/` | `framework.md`（8 个问题）、`cut-sheet.md`、`reference-patterns.md`（页面分析）、`interview.md`、`humanize.md`（GPT 重写提示词 + 守卫）、`numerical-provenance.md`（来源链接契约）、`style-packs.md`（6 个风格包、目录共 44 个模板）、`compliance.md`、`verification.md`、`evidence.md`、`image-briefs.md`、`reference-capture.md` |
 | `skills/sangse/scripts/` | `check_deps.sh`、`humanize_cuts.py`、`check_cuts.py`、`check_copy.py`、`assemble_html.py`、`render_check.py`、`capture_reference.js` |
 | `skills/sangse/assets/` | `cut-templates.json`、`banned-words.json`、`humanize-schema.json`、`style-packs/*.json`（6 个风格包 + 模式）、`template.html` |
 | `setup/` | 首次运行设置（gptaku 标准） |

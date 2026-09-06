@@ -17,7 +17,7 @@
   p { margin: 0 0 12px; font-size: 16px; color: var(--ink); }
   ul { padding-left: 20px; margin: 0 0 12px; }
   li { margin: 4px 0; }
-  figure { margin: 0 -24px 16px; }
+  figure:not(.cut) { margin: 0 -24px 16px; }
   .sec.hero figure { margin-top: 0; }
   img { display: block; width: 100%; height: auto; }
   .cta { display: block; text-align: center; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; padding: 16px; border-radius: 12px; margin: 16px 0 0; font-size: 17px; }
@@ -39,19 +39,19 @@
   .legal h2 { font-size: 16px; margin: 0 0 10px; padding-left: 10px; border-left: 4px solid #999; }
   .todo-inline { background: var(--todo); padding: 0 4px; border-radius: 4px; color: #6b5400; }
   footer { padding: 24px; font-size: 12px; color: var(--muted); text-align: center; }
-  @media (min-width: 600px) { figure { margin: 0 auto 16px; max-width: 400px; } .sec.hero figure { margin-top: 24px; } }
-  @media (max-width: 420px) { .sec { padding: 32px 18px; } figure { margin: 0 -18px 16px; } .sec.hero h2 { font-size: 26px; } }
+  @media (min-width: 600px) { figure:not(.cut) { margin: 0 auto 16px; max-width: 400px; } .sec.hero figure { margin-top: 24px; } }
+  @media (max-width: 420px) { .sec { padding: 32px 18px; } figure:not(.cut) { margin: 0 -18px 16px; } .sec.hero h2 { font-size: 26px; } }
 </style>
 </head>
 <body>
 <main>
-<div class="cutsheet"><figure class="cut" id="c01" data-tpl="K2" data-q="Q2"><img src="images/c01.png" alt="광양골 매실 데일리젤리"></figure>
+<div class="cutsheet"><figure class="cut" id="c01" data-tpl="K2" data-q="Q2"><img src="images/c01.jpg" alt="광양골 매실 데일리젤리"></figure>
 <figure class="cut" id="c02" data-tpl="K3" data-q="Q1"><img src="images/c02.png" alt="러닝 끝, 젤리 집었다 놓은 날"></figure>
 <figure class="cut" id="c03" data-tpl="K4" data-q="Q1"><img src="images/c03.png" alt="운동 뒤 한 포"></figure>
 <figure class="cut" id="c04" data-tpl="K5" data-q="Q2"><img src="images/c04.png" alt="Check Point"></figure>
 <figure class="cut" id="c05" data-tpl="K6" data-q="Q3"><img src="images/c05.png" alt="Point 1 왜 젤리인가"></figure>
 <figure class="cut" id="c06" data-tpl="K7" data-q="Q2·Q3"><img src="images/c06.png" alt="매실 그대로"></figure>
-<figure class="cut" id="c07" data-tpl="K6" data-q="Q3"><img src="images/c07.png" alt="Point 2 맛과 열량"></figure>
+<figure class="cut" id="c07" data-tpl="K6" data-q="Q3"><img src="images/c07.jpg" alt="Point 2 맛과 열량"></figure>
 <figure class="cut" id="c08" data-tpl="K9" data-q="Q5"><img src="images/c08.png" alt="섭취 방법"></figure>
 <figure class="cut" id="c09" data-tpl="K10" data-q="Q1"><img src="images/c09.png" alt="이런 분께 추천해요"></figure>
 <figure class="cut" id="c10" data-tpl="K11" data-q="Q6"><img src="images/c10.png" alt="제품 구성"></figure>

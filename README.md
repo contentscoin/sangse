@@ -8,7 +8,7 @@ English | [한국어](README.ko.md) | [中文](README.zh.md) | [日本語](READM
 
 > **Turn a product into a detail page that sells — a verified image cut sheet, not a spec sheet.**
 
-Give it the product facts. Get back the format Korean commerce actually uses: 12~20 vertically stacked image cuts with the copy inside the image, plus an HTML legal block — every claim traced to your input.
+Give it the product facts. Get back 10~20 vertically stacked image cuts with copy inside the image, plus an HTML legal block. Quantitative statements require an exact input match or a reviewed source link preserving attribute, unit and conditions. The checker does not establish factual truth or verify arithmetic.
 
 [Quick Start](#quick-start) • [Why sangse?](#why-sangse-이런-분을-위한-도구입니다) • [How it works](#how-it-works) • [Features](#features) • [Requirements](#requirements-요구사항)
 
@@ -94,8 +94,8 @@ The cuts follow the **8 questions a customer silently asks before paying**: Is t
 
 | Feature | Description |
 |---------|-------------|
-| Image cut sheet format | 12~20 cuts, width 1000 px, copy rendered inside the image; prices, phone numbers, nutrition tables and legal notices stay in HTML |
-| 29 measured cut templates | Dissected from real pages — Kurly, Coupang, a brand mall, Samsung, LG, Musinsa (fashion), Kmong (services) |
+| Image cut sheet format | 10~20 cuts designed at 1000 px width; actual generated dimensions are checked. Copy is rendered inside the image; prices, phone numbers, nutrition tables and legal notices stay in HTML |
+| 44 cut templates | Dissected from real pages — Kurly, Coupang, a brand mall, Samsung, LG, Musinsa (fashion), Kmong (services) |
 | Uncertainty-driven interview | Asks only what cannot be inferred from the input; at most 4 questions × 2 rounds |
 | Offer check before copy | Weak offers are flagged before a single line of copy is written |
 | GPT humanize pass | A second model (Codex CLI) interprets what each cut is trying to say and rewrites it without AI tells (translation-ese, ad clichés, uniform rhythm, hedging — rules borrowed from humanize-korean); code guards reject any cut that adds a number, drops a placeholder, overflows a slot or introduces a banned word |
@@ -135,7 +135,7 @@ Nothing here is legal advice; final wording is subject to the relevant review bo
 |---|---|
 | `commands/sangse.md` | Single entry point (`/sangse`), argument routing |
 | `skills/sangse/SKILL.md` | Workflow (Step 0 → interview → offer check → cut sheet → 3 gates → images → HTML → report), Iron Law, red flags |
-| `skills/sangse/references/` | `framework.md` (8 questions), `cut-sheet.md`, `reference-patterns.md` (7 real pages dissected, 29 templates), `interview.md`, `humanize.md` (GPT rewrite prompt + guards), `style-packs.md` (6 packs, recommendation rules, grammar), `compliance.md`, `verification.md`, `evidence.md`, `image-briefs.md`, `reference-capture.md` |
+| `skills/sangse/references/` | `framework.md` (8 questions), `cut-sheet.md`, `reference-patterns.md` (page analysis), `interview.md`, `humanize.md` (GPT rewrite prompt + guards), `numerical-provenance.md` (source-link contract), `style-packs.md` (6 packs, 44 templates in the catalog), `compliance.md`, `verification.md`, `evidence.md`, `image-briefs.md`, `reference-capture.md` |
 | `skills/sangse/scripts/` | `check_deps.sh`, `humanize_cuts.py`, `check_cuts.py`, `check_copy.py`, `assemble_html.py`, `render_check.py`, `capture_reference.js` |
 | `skills/sangse/assets/` | `cut-templates.json`, `banned-words.json`, `humanize-schema.json`, `style-packs/*.json` (6 packs + schema), `template.html` |
 | `setup/` | First-run setup (gptaku standard) |
@@ -143,6 +143,12 @@ Nothing here is legal advice; final wording is subject to the relevant review bo
 | `examples/` | Three fictional products with the full artefact trail and `qa/` results; `style-pack-variants/` shows the same product in three packs |
 
 ---
+
+## Verification scope
+
+Run `bash tests/test-gates.sh` for the offline regressions. With Node Playwright and Chrome available, run `SANGSE_RENDER_TESTS=1 bash tests/test-gates.sh` to include browser width and CTA-metric regressions.
+
+Automatic PASS is not image-text approval, product-fidelity approval or publication readiness. Image-embedded CTA position remains `manual_review`; fictional or incomplete drafts are not ready to publish. See [numerical provenance](skills/sangse/references/numerical-provenance.md), [verification](skills/sangse/references/verification.md) and [example status](examples/README.md).
 
 ## Requirements (요구사항)
 

@@ -8,7 +8,7 @@
 
 > **제품을 팔리는 상세페이지로 — 스펙 나열이 아니라 검증된 이미지 컷 시트.**
 
-제품 정보만 주면, 국내 커머스가 실제로 쓰는 형식 그대로 돌아옵니다: 카피가 이미지 안에 들어간 세로 컷 12~20장 + HTML 법정 표시 블록. 모든 주장은 입력에서 출처를 추적합니다.
+제품 정보만 주면, 카피가 이미지 안에 들어간 세로 컷 10~20장 + HTML 법정 표시 블록을 만듭니다. 수치가 든 문장은 원자료와 일치하거나, 검토자가 항목·단위·조건을 대조해 출처를 연결해야 합니다. 자동 검사는 실제 사실의 진위나 계산의 정확성을 대신 판단하지 않습니다.
 
 [빠른 시작](#빠른-시작) • [왜 sangse인가](#왜-sangse인가-이런-분을-위한-도구입니다) • [작동 방식](#작동-방식) • [주요 기능](#주요-기능) • [요구사항](#요구사항)
 
@@ -94,8 +94,8 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · 스코어
 
 | 기능 | 설명 |
 |------|------|
-| 이미지 컷 시트 형식 | 폭 1000px 컷 12~20장, 카피는 이미지 안. 가격·전화번호·영양표·법정 표시는 HTML로 남김 |
-| 실측 템플릿 29종 | 실제 페이지 해부에서 도출 — 컬리·쿠팡·브랜드 자사몰·삼성·LG·무신사(패션)·크몽(서비스) |
+| 이미지 컷 시트 형식 | 폭 1000px 기준 컷 10~20장, 카피는 이미지 안. 실제 생성 해상도는 검수하며, 가격·전화번호·영양표·법정 표시는 HTML로 남김 |
+| 컷 템플릿 44종 | 실제 페이지 해부에서 도출 — 컬리·쿠팡·브랜드 자사몰·삼성·LG·무신사(패션)·크몽(서비스) |
 | 불확실성 기반 인터뷰 | 입력에서 추론 불가한 것만 묻는다. 최대 4문항 × 2라운드 |
 | 오퍼 선행 점검 | 오퍼가 약하면 카피 한 줄 쓰기 전에 알린다 |
 | GPT 윤문 | 다른 모델(Codex CLI)이 컷마다 하려는 말을 해석한 뒤 AI 티(번역투·광고 상투구·리듬 균일·hedging — humanize-korean 규칙 차용) 없이 다시 쓴다. 숫자 유입·플레이스홀더 소실·슬롯 초과·금지어 유입 컷은 코드가 거부하고 원문 유지 |
@@ -135,7 +135,7 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · 스코어
 |---|---|
 | `commands/sangse.md` | 단일 진입점(`/sangse`), 인자 라우팅 |
 | `skills/sangse/SKILL.md` | 워크플로우(Step 0 → 인터뷰 → 오퍼 점검 → 컷 시트 → 3 게이트 → 이미지 → HTML → 보고), Iron Law, Red Flags |
-| `skills/sangse/references/` | `framework.md`(8질문), `cut-sheet.md`, `reference-patterns.md`(실제 페이지 7종 해부, 템플릿 29종), `interview.md`, `humanize.md`(GPT 윤문 프롬프트·가드), `style-packs.md`(팩 6종·추천 규칙·공통 문법), `compliance.md`, `verification.md`, `evidence.md`, `image-briefs.md`, `reference-capture.md` |
+| `skills/sangse/references/` | `framework.md`(8질문), `cut-sheet.md`, `reference-patterns.md`(페이지 해부), `interview.md`, `humanize.md`(GPT 윤문 프롬프트·가드), `numerical-provenance.md`(출처 연결 계약), `style-packs.md`(팩 6종·카탈로그 템플릿 44종), `compliance.md`, `verification.md`, `evidence.md`, `image-briefs.md`, `reference-capture.md` |
 | `skills/sangse/scripts/` | `check_deps.sh`, `humanize_cuts.py`, `check_cuts.py`, `check_copy.py`, `assemble_html.py`, `render_check.py`, `capture_reference.js` |
 | `skills/sangse/assets/` | `cut-templates.json`, `banned-words.json`, `humanize-schema.json`, `style-packs/*.json`(팩 6종+스키마), `template.html` |
 | `setup/` | 최초 실행 셋업(gptaku 표준) |
@@ -143,6 +143,17 @@ sangse/<slug>/  cuts.md · legal.md · images/ · index.html · qa/ · 스코어
 | `examples/` | 가상 상품 3종의 전 과정 산출물 + `qa/` 결과. `style-pack-variants/`는 같은 제품을 세 팩으로 편성한 비교 |
 
 ---
+
+## 검증 범위와 재현
+
+`bash tests/test-gates.sh`는 예제 자동 검사·조립·숫자 출처·윤문 승인을 검사합니다.
+Node Playwright와 Chrome이 준비된 환경에서는
+`SANGSE_RENDER_TESTS=1 bash tests/test-gates.sh`로 컷 폭·CTA 지표의 브라우저 회귀도 실행합니다.
+
+컷 모드의 자동 PASS는 이미지 안 글자·제품 사양 일치나 게시 준비 완료를 뜻하지 않습니다.
+이미지 속 CTA 위치는 `manual_review`로 남기며, 가상 예제와 자료 미확정 시안은 게시 준비 완료로 표시하지 않습니다.
+상세 계약은 [숫자 출처](skills/sangse/references/numerical-provenance.md)와
+[검증 게이트](skills/sangse/references/verification.md), 예제 상태는 [examples](examples/README.md)를 확인하세요.
 
 ## 요구사항
 

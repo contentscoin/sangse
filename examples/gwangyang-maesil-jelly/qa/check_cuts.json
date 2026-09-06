@@ -1,11 +1,12 @@
 {
-  "path": "/Users/chulrolee/.claude/skills/sangse/examples/gwangyang-maesil-jelly/cuts.md",
+  "path": "/Users/chulrolee/gptaku_plugins/plugins/sangse/examples/gwangyang-maesil-jelly/cuts.md",
   "cuts": 14,
   "category": [
     "common",
     "health_food"
   ],
   "platform": "smartstore",
+  "style": null,
   "checks": [
     {
       "id": "T1",
@@ -36,7 +37,7 @@
     {
       "id": "T5",
       "status": "PASS",
-      "message": "모든 숫자가 입력에 존재",
+      "message": "정량 문장 출처 연결 PASS",
       "detail": []
     },
     {
@@ -44,8 +45,8 @@
       "status": "WARN",
       "message": "금지어 0건 / 경고어 2건",
       "detail": [
-        "[health_food] '효능' @L170",
-        "[health_food] '효능' @L251"
+        "[health_food] '효능' @L171",
+        "[health_food] '효능' @L252"
       ]
     },
     {
