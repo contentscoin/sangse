@@ -1,0 +1,67 @@
+{
+  "recorded_at": "2026-09-06T08:13:24.181987+00:00",
+  "mode": "cuts",
+  "scope": "synthetic reference only; no human copy approval or real commerce readiness",
+  "focused_tests": {
+    "numerical_provenance": {
+      "passed": 18,
+      "failed": 0,
+      "log": "qa/numerical-tests.log"
+    },
+    "humanize_approval": {
+      "passed": 12,
+      "failed": 0,
+      "log": "qa/humanize-tests.log"
+    }
+  },
+  "diagnostics": {
+    "markdown_lsp": "unavailable: no server configured; no diagnostics PASS claimed"
+  },
+  "gate1": {
+    "verdict": "PASS",
+    "cuts": 11,
+    "fail": 0,
+    "warn": 0,
+    "T5": "PASS",
+    "T8": "PASS"
+  },
+  "gate2": {
+    "snapshot": "qa/approved-text-cuts.md",
+    "snapshot_sha256": "b6dcaed5ecdc613f7c72d26adde3c917e92d725168753a59f5ffb0d16fa543ec",
+    "distinct_reviewers": 4,
+    "customer_yes": 8,
+    "customer_total": 8,
+    "regulatory_draft_violations": 0,
+    "cro_score": 24,
+    "cro_max": 30,
+    "competitor_openings": 3
+  },
+  "render": {
+    "390": "PASS",
+    "860": "PASS",
+    "images": 11,
+    "broken_images": 0,
+    "image_width_mismatches": 0,
+    "cut_width_mismatches": 0,
+    "horizontal_overflow": false,
+    "ctaPositionStatus": "manual_review",
+    "firstCtaTop": null
+  },
+  "blind_proxy": {
+    "matched_core_questions": 3,
+    "total_core_questions": 3,
+    "timed_human_study": false,
+    "caveat": "Meaning of fictional demonstration label still unclear to agent; actual outcomes not established"
+  },
+  "integrity_checks": {
+    "original_source_prefix_preserved": true,
+    "scoped_quantitative_claims": 22,
+    "authentic_humanize_source_and_output_hashes_match": true,
+    "final_cut_diff_is_image_metadata_only": true,
+    "all_final_images_equal_session_original_bytes": true,
+    "all_final_images_square_1024": true,
+    "image_total_bytes": 2352600,
+    "image_max_bytes": 281979,
+    "reencoded": false
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "recorded_at": "2026-09-06T08:10:36.441953+00:00",
+  "model_version": "Grok image backend; internal image-model version not surfaced by wrapper",
+  "initial_anchor_operation": "image_gen",
+  "initial_anchor_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+  "images": [
+    {
+      "cut": "C01",
+      "image": "images/c01.jpg",
+      "sha256": "97ce62e503818f4b539b06039679ee07ca171a3ae43fc7233cfd386fb8a6952f",
+      "bytes": 281979,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.t0uPc2RJ9S/01a075c1-30dd-7211-a5b5-ff76e8aec8cb/images/1.jpg",
+      "source_sha256": "97ce62e503818f4b539b06039679ee07ca171a3ae43fc7233cfd386fb8a6952f",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    },
+    {
+      "cut": "C02",
+      "image": "images/c02.jpg",
+      "sha256": "aa221328c006b6a2e0827d0870f0e323c7c6292ad0a9fca0ef43a404e536f83d",
+      "bytes": 174504,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.h7TkEFO0Uv/01a075b7-3041-70b0-8ca4-724e1e0e0cdd/images/1.jpg",
+      "source_sha256": "aa221328c006b6a2e0827d0870f0e323c7c6292ad0a9fca0ef43a404e536f83d",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    },
+    {
+      "cut": "C03",
+      "image": "images/c03.jpg",
+      "sha256": "efc6de0ebe9b2f8c39a1bb7490289cae7d4b17aa1978a508f2b42c4189c5c6fc",
+      "bytes": 164842,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.B4pfJdzqtn/01a075b7-b563-74f2-af6e-71946f4480b5/images/1.jpg",
+      "source_sha256": "efc6de0ebe9b2f8c39a1bb7490289cae7d4b17aa1978a508f2b42c4189c5c6fc",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    },
+    {
+      "cut": "C04",
+      "image": "images/c04.jpg",
+      "sha256": "25943626dda35f87ec209bacbc387fd03912cf55c82dde4dd0eb8d1084e4b844",
+      "bytes": 192208,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.6NT5o1qbs4/01a075b8-3676-7423-a7e3-c763d7e4d5b5/images/1.jpg",
+      "source_sha256": "25943626dda35f87ec209bacbc387fd03912cf55c82dde4dd0eb8d1084e4b844",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    },
+    {
+      "cut": "C05",
+      "image": "images/c05.jpg",
+      "sha256": "698c467dc8ca067e4a1c97c516682a6075723c85ebe673378c34bd7fdd584cb9",
+      "bytes": 212879,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.kyJ5nJXLsc/01a075b8-b43e-7ed3-ac1e-39655fbf3661/images/1.jpg",
+      "source_sha256": "698c467dc8ca067e4a1c97c516682a6075723c85ebe673378c34bd7fdd584cb9",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    },
+    {
+      "cut": "C06",
+      "image": "images/c06.jpg",
+      "sha256": "347c4e4b76db644d96450ec6d2d8283a03184a05fde1b1455032c4e85dc300ca",
+      "bytes": 223026,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.a9seYjpUad/01a075b9-97f6-72d1-99ec-6a1b266925b9/images/1.jpg",
+      "source_sha256": "347c4e4b76db644d96450ec6d2d8283a03184a05fde1b1455032c4e85dc300ca",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 5,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": "qa/image-c06-recovery.md"
+    },
+    {
+      "cut": "C07",
+      "image": "images/c07.jpg",
+      "sha256": "1696c02614296e0e852c280f5ace75e115bb716848a47e728e3c10483f603544",
+      "bytes": 231994,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.oEYEZXoiBC/01a075ba-9dea-7d71-8f9a-981c1f93c461/images/1.jpg",
+      "source_sha256": "1696c02614296e0e852c280f5ace75e115bb716848a47e728e3c10483f603544",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 5,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": "qa/image-c07-recovery.md"
+    },
+    {
+      "cut": "C08",
+      "image": "images/c08.jpg",
+      "sha256": "f1e4a56805717a3d4b8c87e2b7d4a28f57672b17166838dcc343f91bd6dc43af",
+      "bytes": 166835,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.sjzdRd62mn/01a075bb-9cde-7f82-a987-8eb811b6083f/images/1.jpg",
+      "source_sha256": "f1e4a56805717a3d4b8c87e2b7d4a28f57672b17166838dcc343f91bd6dc43af",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 5,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": "qa/image-c08-recovery.md"
+    },
+    {
+      "cut": "C09",
+      "image": "images/c09.jpg",
+      "sha256": "e532847a4c498d9a38f409dfaac4f2a923edf4c564748df64aa1f007b6b9fda4",
+      "bytes": 281317,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.iPcUhHotRD/01a075bc-b046-7993-903f-bf0ff15b1fdb/images/1.jpg",
+      "source_sha256": "e532847a4c498d9a38f409dfaac4f2a923edf4c564748df64aa1f007b6b9fda4",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 5,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": "qa/image-c09-recovery.md"
+    },
+    {
+      "cut": "C10",
+      "image": "images/c10.jpg",
+      "sha256": "e7d062ad08ab553fafeca748c36125301ebc82b25d52d0608684ac663f81a145",
+      "bytes": 175637,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.upQOiGjcJ4/01a075bd-bc61-7492-8a73-bffd936b7e81/images/1.jpg",
+      "source_sha256": "e7d062ad08ab553fafeca748c36125301ebc82b25d52d0608684ac663f81a145",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    },
+    {
+      "cut": "C11",
+      "image": "images/c11.jpg",
+      "sha256": "1e27235c753a2302f20c951cac73757187d288e17965ab2db4c49bb27379a1db",
+      "bytes": 247379,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "source": "/Users/chulrolee/.grok/sessions/%2Fprivate%2Fvar%2Ffolders%2Ftk%2Fz_dr2xq57bd3f6pg3l46d4700000gn%2FT%2Fimagen-grok.XXXXXX.18KzibeucR/01a075be-3767-70c3-aece-82a73342b3d5/images/1.jpg",
+      "source_sha256": "1e27235c753a2302f20c951cac73757187d288e17965ab2db4c49bb27379a1db",
+      "backend": "grok",
+      "operation": "image_edit",
+      "reference": "qa/reference-anchor-original.jpg",
+      "reference_sha256": "9ceb7eb98f3364a07da3e781d38e544921c1b3e92386b5749d1ea22a6e058fbe",
+      "wrapper_exit": 0,
+      "original_bytes_equal": true,
+      "reencoded": false,
+      "recovery_report": null
+    }
+  ]
+}

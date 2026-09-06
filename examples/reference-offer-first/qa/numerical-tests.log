@@ -1,0 +1,23 @@
+test_approval_cannot_cite_its_own_claim (test_numerical_provenance.NumericalProvenanceTests.test_approval_cannot_cite_its_own_claim) ... ok
+test_approval_is_scoped_to_context (test_numerical_provenance.NumericalProvenanceTests.test_approval_is_scoped_to_context) ... ok
+test_exact_copies_and_formatting (test_numerical_provenance.NumericalProvenanceTests.test_exact_copies_and_formatting) ... ok
+test_explicit_source_linked_rewording_and_derived_price (test_numerical_provenance.NumericalProvenanceTests.test_explicit_source_linked_rewording_and_derived_price) ... ok
+test_invalid_declarations_fail_even_with_exact_copy (test_numerical_provenance.NumericalProvenanceTests.test_invalid_declarations_fail_even_with_exact_copy) ... ok
+test_layout_labels_cannot_hide_quantities (test_numerical_provenance.NumericalProvenanceTests.test_layout_labels_cannot_hide_quantities) ... ok
+test_legal_is_checked_not_only_cuts (test_numerical_provenance.NumericalProvenanceTests.test_legal_is_checked_not_only_cuts) ... ok
+test_metadata_is_not_copy (test_numerical_provenance.NumericalProvenanceTests.test_metadata_is_not_copy) ... ok
+test_multiline_attribute_remains_attached (test_numerical_provenance.NumericalProvenanceTests.test_multiline_attribute_remains_attached) ... ok
+test_no_source_is_not_a_pass (test_numerical_provenance.NumericalProvenanceTests.test_no_source_is_not_a_pass) ... ok
+test_qualifiers_cannot_change (test_numerical_provenance.NumericalProvenanceTests.test_qualifiers_cannot_change) ... ok
+test_ranges_are_not_bags_of_endpoints (test_numerical_provenance.NumericalProvenanceTests.test_ranges_are_not_bags_of_endpoints) ... ok
+test_same_line_attributes_cannot_swap (test_numerical_provenance.NumericalProvenanceTests.test_same_line_attributes_cannot_swap) ... ok
+test_same_unit_different_attribute (test_numerical_provenance.NumericalProvenanceTests.test_same_unit_different_attribute) ... ok
+test_shipped_examples_and_reported_mutation (test_numerical_provenance.NumericalProvenanceTests.test_shipped_examples_and_reported_mutation) ... ok
+test_stale_or_invalid_source_links_fail_closed (test_numerical_provenance.NumericalProvenanceTests.test_stale_or_invalid_source_links_fail_closed) ... ok
+test_unit_changes_and_small_numbers_fail (test_numerical_provenance.NumericalProvenanceTests.test_unit_changes_and_small_numbers_fail) ... ok
+test_unrelated_pack_number_cannot_supply_mg (test_numerical_provenance.NumericalProvenanceTests.test_unrelated_pack_number_cannot_supply_mg) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 2.566s
+
+OK

@@ -1,0 +1,79 @@
+{
+  "path": "/Users/chulrolee/gptaku_plugins/plugins/sangse/examples/reference-offer-first/cuts.md",
+  "cuts": 11,
+  "category": [
+    "common",
+    "common"
+  ],
+  "platform": "web",
+  "style": "offer-first",
+  "checks": [
+    {
+      "id": "T1",
+      "status": "PASS",
+      "message": "컷 헤딩·템플릿·높이 정상",
+      "detail": []
+    },
+    {
+      "id": "T2",
+      "status": "PASS",
+      "message": "텍스트 슬롯 한도 정상",
+      "detail": []
+    },
+    {
+      "id": "T3",
+      "status": "PASS",
+      "message": "컷 수·Q 커버리지·순서",
+      "detail": []
+    },
+    {
+      "id": "T4",
+      "status": "PASS",
+      "message": "앵커·배경·법정 가드",
+      "detail": []
+    },
+    {
+      "id": "T5",
+      "status": "PASS",
+      "message": "정량 문장 출처 연결 PASS",
+      "detail": []
+    },
+    {
+      "id": "T6",
+      "status": "PASS",
+      "message": "금지어 0건 / 경고어 0건",
+      "detail": []
+    },
+    {
+      "id": "T7",
+      "status": "PASS",
+      "message": "legal 블록 1개 존재",
+      "detail": []
+    },
+    {
+      "id": "I",
+      "status": "PASS",
+      "message": "이미지 11장 실존",
+      "detail": []
+    },
+    {
+      "id": "P",
+      "status": "INFO",
+      "message": "플레이스홀더 3개",
+      "detail": [
+        "[자료 필요: 실제 사업자·문의처·결제 경로·서비스 이용 약관]",
+        "[자료 필요: 구독 자동결제·해지·환불 조건 확인]",
+        "[자료 필요: 실제 수강 자료·후기 동의·가격 및 기한 운영 근거]"
+      ]
+    },
+    {
+      "id": "T8",
+      "status": "PASS",
+      "message": "스타일 팩 offer-first 시퀀스 일치",
+      "detail": []
+    }
+  ],
+  "fail": 0,
+  "warn": 0,
+  "verdict": "PASS"
+}

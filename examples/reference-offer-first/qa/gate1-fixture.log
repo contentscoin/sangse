@@ -1,0 +1,49 @@
+✅ T1 컷 헤딩·템플릿·높이 정상
+✅ T2 텍스트 슬롯 한도 정상
+✅ T3 컷 수·Q 커버리지·순서
+✅ T4 앵커·배경·법정 가드
+❌ T5 정량 문장 출처 연결 FAIL
+     - intake-checklist.md quantitative-facts: Invalid control character at: line 18 column 32 (char 500)
+     - C01.headline: unlinked quantitative statement: 또박 손글씨 4주|얼리버드 49,000원
+     - C01.body: unlinked quantitative statement: 글씨가 고민인 직장인·학부모라면
+부끄럽지 않은 손글씨 메모가 목표예요
+선착순 100명 · 2026-09-30까지
+     - C03.headline: unlinked quantitative statement: 받으실 혜택은|7가지예요
+     - C03.sub: unlinked quantitative statement: 01 평생 소장
+     - C03.body: unlinked quantitative statement: 02 연습장 PDF 4권
+03 주 1회 피드백
+04 수료증
+05 재수강 무료
+06 커뮤니티
+07 조건부 전액 환불
+     - C03.footnote: unlinked quantitative statement: 결제 후 7일 이내, 2강 이하 수강 시
+     - C04.body: unlinked quantitative statement: 학원 시간 맞추기는 어렵고
+유튜브만 봐서는 피드백이 아쉬웠다면
+연습 사진을 보내주세요
+주 1회 피드백을 드려요
+     - C05.sub: unlinked quantitative statement: 선착순 100명 · 2026-09-30까지
+     - C05.body: unlinked quantitative statement: 얼리버드 49,000원
+2차 59,000원
+10-01~10-15
+이후 정가 79,000원
+     - C05.footnote: unlinked quantitative statement: 별도 월 구독 19,000원 · 첫 달 50%
+     - C06.sub: unlinked quantitative statement: 평점 4.8/5 · 후기 312개
+     - C06.body: unlinked quantitative statement: 글씨가 정돈돼서 메모가 즐거워요
+직장인 3년차 · 가상 후기
+아이 알림장 쓰기가 편해졌어요
+주부 · 가상 후기
+수강생 1,240명 · 4주 완주율 71%
+     - C07.body: unlinked quantitative statement: 주 2회 · 총 8강 · 각 15분
+연습장 PDF 4권
+사진 제출 · 주 1회 피드백
+     - C08.headline: unlinked quantitative statement: 4주 커리큘럼
+✅ T6 금지어 0건 / 경고어 0건
+✅ T7 legal 블록 1개 존재
+ℹ️ I 이미지 0장 실존
+ℹ️ P 플레이스홀더 3개
+     - [자료 필요: 실제 사업자·문의처·결제 경로·서비스 이용 약관]
+     - [자료 필요: 구독 자동결제·해지·환불 조건 확인]
+     - [자료 필요: 실제 수강 자료·후기 동의·가격 및 기한 운영 근거]
+✅ T8 스타일 팩 offer-first 시퀀스 일치
+
+FAIL: cuts=11 fail=1 warn=0

@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "width": 390,
+      "status": "PASS",
+      "fails": [],
+      "metrics": {
+        "vw": 390,
+        "scrollWidth": 390,
+        "horizontalScroll": false,
+        "q1HeadlineTop": 0,
+        "cutsMode": true,
+        "mainWidth": 390,
+        "cutWidths": [
+          390,
+          390,
+          390,
+          390,
+          390,
+          390,
+          390,
+          390,
+          390,
+          390,
+          390
+        ],
+        "cutWidthMismatches": [],
+        "imageWidthMismatches": [],
+        "cutsFillMainWidth": true,
+        "cutCount": 11,
+        "placeholderCuts": 0,
+        "q1HeadlineInFirstViewport": true,
+        "closingCutPresent": true,
+        "closingCutTop": 0,
+        "ctaPositionStatus": "manual_review",
+        "firstCtaTop": null,
+        "ctaInFirstTwoViewports": null,
+        "placeholders": 6,
+        "brokenImages": 0,
+        "imageCount": 11,
+        "pageHeight": 5905,
+        "requestFailed": []
+      },
+      "screenshot": "/Users/chulrolee/gptaku_plugins/plugins/sangse/examples/reference-offer-first/qa/render-390.png"
+    },
+    {
+      "width": 860,
+      "status": "PASS",
+      "fails": [],
+      "metrics": {
+        "vw": 860,
+        "scrollWidth": 860,
+        "horizontalScroll": false,
+        "q1HeadlineTop": 0,
+        "cutsMode": true,
+        "mainWidth": 720,
+        "cutWidths": [
+          720,
+          720,
+          720,
+          720,
+          720,
+          720,
+          720,
+          720,
+          720,
+          720,
+          720
+        ],
+        "cutWidthMismatches": [],
+        "imageWidthMismatches": [],
+        "cutsFillMainWidth": true,
+        "cutCount": 11,
+        "placeholderCuts": 0,
+        "q1HeadlineInFirstViewport": true,
+        "closingCutPresent": true,
+        "closingCutTop": 0,
+        "ctaPositionStatus": "manual_review",
+        "firstCtaTop": null,
+        "ctaInFirstTwoViewports": null,
+        "placeholders": 6,
+        "brokenImages": 0,
+        "imageCount": 11,
+        "pageHeight": 9271,
+        "requestFailed": []
+      },
+      "screenshot": "/Users/chulrolee/gptaku_plugins/plugins/sangse/examples/reference-offer-first/qa/render-860.png"
+    }
+  ],
+  "verdict": "PASS"
+}
