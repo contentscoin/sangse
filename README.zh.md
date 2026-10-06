@@ -2,6 +2,8 @@
 
 # sangse (상세)
 
+这是 contentscoin 分支 **0.8.1**，基于 [fivetaku/sangse](https://github.com/fivetaku/sangse)，保留原作者、MIT 版权声明和原有命令。按类别、主题和商品规划页面以及 GPT Image 2.5、GIF 制作，请使用可选的 [Wadiz v0.3.0 桥接](skills/sangse/references/wadiz-bridge.md)（Node >=20.9.0，schema 1）。桥接不调用旧图片后端或付费生成。
+
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">
 </p>
@@ -21,17 +23,22 @@
 ### 1. 添加市场（仅需一次）
 
 ```
-/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin marketplace add https://github.com/contentscoin/sangse.git
 ```
 
 ### 2. 安装
 
 ```
-/plugin install sangse
-/plugin install pumasi          # 图片生成后端 (/pumasi:image)
+/plugin install sangse@contentscoin-sangse
+
+# 仅用于原有 /sangse 图片制作，Wadiz 桥接不需要:
+/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin install pumasi@gptaku-plugins
 ```
 
 安装后请重启 Claude Code。
+
+更新本分支：`/plugin marketplace update contentscoin-sangse` → `/plugin update sangse@contentscoin-sangse` → 重启。`sangse@gptaku-plugins` 安装的是上游版本。Wadiz 需单独安装验证过的 v0.3.0，桥接会拒绝不支持的版本。
 
 ### 3. 启用图片后端
 

@@ -2,6 +2,8 @@
 
 # 상세 (sangse)
 
+이 저장소는 [fivetaku/sangse](https://github.com/fivetaku/sangse)를 기반으로 한 contentscoin 포크 **0.8.1**입니다. 원저자와 MIT 저작권 고지를 보존하고 기존 명령은 유지합니다. 카테고리·주제·상품별 기획, GPT Image 2.5·GIF 제작은 선택형 [Wadiz v0.3.0 브리지](skills/sangse/references/wadiz-bridge.md)(Node >=20.9.0, schema 1)로 연결합니다. 브리지는 구형 이미지 백엔드를 쓰거나 유료 생성을 호출하지 않습니다.
+
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">
 </p>
@@ -21,17 +23,22 @@
 ### 1. 마켓플레이스 추가 (최초 1회)
 
 ```
-/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin marketplace add https://github.com/contentscoin/sangse.git
 ```
 
 ### 2. 설치
 
 ```
-/plugin install sangse
-/plugin install pumasi          # 이미지 생성 백엔드 (/pumasi:image)
+/plugin install sangse@contentscoin-sangse
+
+# 보존된 구형 /sangse 이미지 제작만 필요할 때, Wadiz 브리지에는 불필요:
+/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin install pumasi@gptaku-plugins
 ```
 
 설치 후 Claude Code를 재시작합니다.
+
+이 포크의 업데이트는 `/plugin marketplace update contentscoin-sangse` → `/plugin update sangse@contentscoin-sangse` → 재시작 순입니다. `sangse@gptaku-plugins`는 상류 버전이며 이번 통합판이 아닙니다. Wadiz는 검증된 v0.3.0 릴리스를 별도로 설치하며 브리지는 미지원 버전을 차단합니다.
 
 ### 3. 이미지 백엔드 켜기
 

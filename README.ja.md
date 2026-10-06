@@ -2,6 +2,8 @@
 
 # sangse (상세)
 
+contentscoin フォーク **0.8.1**。原作者 [fivetaku/sangse](https://github.com/fivetaku/sangse) の MIT ライセンスと著作者表示を保持し、既存コマンドも維持します。カテゴリ・テーマ・商品別企画、GPT Image 2.5 と GIF 制作は任意の [Wadiz v0.3.0 ブリッジ](skills/sangse/references/wadiz-bridge.md)（Node >=20.9.0、schema 1）を使用します。ブリッジは旧画像バックエンドや有料生成を呼び出しません。
+
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">
 </p>
@@ -21,17 +23,22 @@
 ### 1. マーケットプレイスを追加（初回のみ）
 
 ```
-/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin marketplace add https://github.com/contentscoin/sangse.git
 ```
 
 ### 2. インストール
 
 ```
-/plugin install sangse
-/plugin install pumasi          # 画像生成バックエンド (/pumasi:image)
+/plugin install sangse@contentscoin-sangse
+
+# 既存 /sangse の画像制作のみ。Wadiz ブリッジには不要:
+/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin install pumasi@gptaku-plugins
 ```
 
 インストール後、Claude Code を再起動してください。
+
+更新は `/plugin marketplace update contentscoin-sangse` → `/plugin update sangse@contentscoin-sangse` → 再起動。`sangse@gptaku-plugins` は上流版です。Wadiz の検証済み v0.3.0 は別途インストールし、未対応バージョンはブリッジが拒否します。
 
 ### 3. 画像バックエンドを有効化
 

@@ -1,7 +1,7 @@
 ---
 name: sangse
 description: "제품 정보를 이미지 컷 시트 상세페이지로 - 8질문 카피, 컴플라이언스, 3중 검증"
-argument-hint: "[제품 정보 텍스트·파일 경로·URL | 카피만 | 스마트스토어용 | --style <pack> | check <dir> | humanize <dir>]"
+argument-hint: "[제품 정보 텍스트·파일 경로·URL | 카피만 | 스마트스토어용 | --style <pack> | check <dir> | humanize <dir> | wadiz import <dir> --out <new-dir>]"
 allowed-tools:
   - Bash
   - Read
@@ -13,6 +13,10 @@ allowed-tools:
   - Agent
   - Skill
 ---
+
+## Optional Wadiz bridge routing
+
+When `$ARGUMENTS` starts with `wadiz import`, `wadiz plan`, or `wadiz convert-jobs`, read `${CLAUDE_PLUGIN_ROOT}/skills/sangse/references/wadiz-bridge.md` and run `node "${CLAUDE_PLUGIN_ROOT}/skills/sangse/scripts/wadiz-bridge.mjs"` with the arguments following `wadiz`. Report its actual result and stop this command here. These bridge actions use the installed Wadiz skill and do not enter the legacy setup or image-generation path. All other arguments continue with the existing workflow below.
 
 <!-- first-run setup: idempotent, non-blocking, self-skips after first run -->
 **Step 0 - run once at the very start, before anything else:** run `bash "${CLAUDE_PLUGIN_ROOT}/setup/setup.sh" ask`. If its output starts with `STAR_ASK`, immediately call the **AskUserQuestion** tool once, with the question and options phrased **in the user's language**: prefer the current conversation's language if it is evident; otherwise fall back to the language code that follows `STAR_ASK` in the output (`ko`→Korean, `ja`→Japanese, `en`→English). Never default to Korean blindly.
@@ -36,6 +40,7 @@ Inspect `$ARGUMENTS`:
 
 | Argument pattern | Action |
 |---|---|
+| `wadiz import <dir> --out <new-dir>` / `wadiz plan ...` / `wadiz convert-jobs ...` | Use the optional local bridge above; preserve the legacy inputs and report compatibility limits. |
 | product info (text, file path, URL) | Run the `sangse` skill from Step 0 (dependency check) → Step 1 (collect) |
 | contains `카피만` / `copy only` | Same, but stop after the copy approval gate - no image generation |
 | contains `스마트스토어` / `크몽` / `웹` | Pre-set the platform, skip that interview question |

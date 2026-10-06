@@ -351,7 +351,10 @@ def main():
     new_all = "\n".join(cut_text(c) for c in new_cuts)
     change_rate = round(1 - difflib.SequenceMatcher(None, old_all, new_all).ratio(), 3)
     out_md = render(header, new_cuts)
-    open(os.path.join(base, "cuts.humanized.md"), "w", encoding="utf-8").write(out_md)
+    # Bind the saved preview to the same bytes on every platform. Text-mode
+    # writes translate LF to CRLF on Windows, invalidating approval hashes.
+    output_bytes = out_md.encode("utf-8")
+    _ = (Path(base) / "cuts.humanized.md").write_bytes(output_bytes)
     os.makedirs(os.path.join(base, "qa"), exist_ok=True)
     report = {
         "cuts": len(cuts), "accepted": accepted, "rejected": rejected, "unchanged": unchanged,
@@ -359,7 +362,7 @@ def main():
         "meanings": meanings, "gpt_notes": resp.get("notes", []),
         "applied": False, "category": cats, "model": model or "codex default",
         "source_sha256": hashlib.sha256(source_bytes).hexdigest(),
-        "output_sha256": hashlib.sha256(out_md.encode("utf-8")).hexdigest(),
+        "output_sha256": hashlib.sha256(output_bytes).hexdigest(),
     }
     json.dump(report, open(os.path.join(base, "qa", "humanize.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"HUMANIZE: cuts={len(cuts)} accepted={len(accepted)} rejected={len(rejected)} unchanged={len(unchanged)} "
