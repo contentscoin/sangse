@@ -2,7 +2,7 @@ English | [한국어](README.ko.md) | [中文](README.zh.md) | [日本語](READM
 
 # sangse (상세)
 
-contentscoin fork **0.8.1**, based on [fivetaku/sangse](https://github.com/fivetaku/sangse); the original MIT license and author attribution are retained. Existing commands still work. For category/topic/product planning, GPT Image 2.5 and GIF production, use the optional [Wadiz v0.3.0 bridge](skills/sangse/references/wadiz-bridge.md) (Node >=20.9.0, schema 1). The bridge does not use the legacy image backend or make paid generation calls.
+contentscoin fork **0.8.1**, based on [fivetaku/sangse](https://github.com/fivetaku/sangse); the original MIT license and author attribution are retained. Existing commands still work. For category/topic/product planning, GPT Image 2.5 and GIF production, use the optional [Wadiz v0.3.0 bridge](skills/sangse/references/wadiz-bridge.md) (Node >=22.0.0, schema 1). The bridge does not use the legacy image backend or make paid generation calls. The Node minimum applies to the new bridge, not the preserved Python/legacy commands.
 
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">

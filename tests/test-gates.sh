@@ -185,11 +185,11 @@ else
   bad "윤문 승인 회귀" "위 실패 출력 참조"
 fi
 
-echo "[Wadiz 브리지·릴리스 출처 회귀 — Node >=20.9.0, 네트워크 없음]"
+echo "[Wadiz 브리지·릴리스 출처 회귀 — Node >=22.0.0, 네트워크 없음]"
 if command -v node >/dev/null 2>&1 && node --test "$PLUGIN_DIR/tests/test_wadiz_bridge.mjs" "$PLUGIN_DIR/tests/test_release_contract.mjs"; then
   ok "Wadiz 브리지 지원 버전·schema·Node·설치 출처 회귀"
 else
-  bad "Wadiz 브리지·릴리스 출처 회귀" "Node >=20.9.0 필요; 위 실패 출력 참조"
+  bad "Wadiz 브리지·릴리스 출처 회귀" "신규 Wadiz 브리지 테스트는 Node >=22.0.0 필요; 위 실패 출력 참조"
 fi
 
 if [[ "${SANGSE_RENDER_TESTS:-0}" == "1" ]]; then

@@ -4,7 +4,7 @@
 
 ## 설치와 지원 계약
 
-sangse contentscoin 포크 0.8.1의 브리지 검증 기준은 **Wadiz [v0.3.0 릴리스](https://github.com/contentscoin/wadiz-detail-page-production-skill/releases/tag/v0.3.0)**다. 브리지는 안정 버전 `0.3.x`, `release.json`의 `schema_version: 1`, **Node >=20.9.0**을 사전 검사한다. 메타데이터 없음·손상, 구버전, 프리릴리스, 다른 minor/major 또는 schema 변경은 자동 대체하지 않고 중단한다. Wadiz 소스 저장소 루트와 설치한 스킬 폴더를 모두 지원한다.
+sangse contentscoin 포크 0.8.1의 브리지 검증 기준은 **Wadiz [v0.3.0 릴리스](https://github.com/contentscoin/wadiz-detail-page-production-skill/releases/tag/v0.3.0)**다. 브리지는 안정 버전 `0.3.x`, `release.json`의 `schema_version: 1`, **Node >=22.0.0**을 사전 검사한다. Node 20.9의 실제 CI에서 이미지 의존성의 JSON import 구문 오류가 확인되어 신규 브리지 지원 최소 버전을 22로 올렸다. 이 조건은 보존된 Python·legacy 명령의 기존 실행 조건을 변경하지 않는다. 메타데이터 없음·손상, 구버전, 프리릴리스, 다른 minor/major 또는 schema 변경은 자동 대체하지 않고 중단한다. Wadiz 소스 저장소 루트와 설치한 스킬 폴더를 모두 지원한다.
 
 Wadiz 설치 방법은 해당 릴리스의 README를 따른다. 재현 가능한 설치가 필요하면 clone 후 `git checkout v0.3.0`으로 고정하고 그 릴리스의 스킬 폴더를 설치한다. 이 브리지는 자동 clone·설치·업데이트·의존성 설치를 수행하지 않는다. `plan`/`import`만 실행하는 브리지에는 이전 `pumasi` 플러그인이 필요하지 않다. 실제 이미지·GIF 제작의 의존성과 모델/비용 승인 확인은 Wadiz 쪽의 절차를 따른다.
 
@@ -27,4 +27,4 @@ node skills/sangse/scripts/wadiz-bridge.mjs convert-jobs old-imagegen-jobs.json 
 
 ## 검증
 
-`bash tests/test-gates.sh`에는 기존 회귀와 새 Node 브리지·릴리스 출처 검사가 함께 연결된다. CI의 core 게이트는 Linux/Windows에서 숫자 출처·윤문 승인과 Node 브리지/릴리스 회귀를 네트워크·유료 생성 없이 실행한다. 실제 Wadiz 연결은 [주 저장소](https://github.com/contentscoin/wadiz-detail-page-production-skill)의 호환 테스트와 별도 smoke 결과로 검증하며, 모의 설치 테스트 통과를 유료 생성 성공으로 해석하지 않는다.
+`bash tests/test-gates.sh`에는 기존 회귀와 새 Node 브리지·릴리스 출처 검사가 함께 연결된다. CI의 core 게이트는 Linux/Windows × Node 22.0.0/24에서 숫자 출처·윤문 승인과 Node 브리지/릴리스 회귀를 네트워크·유료 생성 없이 실행한다. 실제 Wadiz 연결은 [주 저장소](https://github.com/contentscoin/wadiz-detail-page-production-skill)의 호환 테스트와 별도 smoke 결과로 검증하며, 모의 설치 테스트 통과를 유료 생성 성공으로 해석하지 않는다.

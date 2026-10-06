@@ -4,7 +4,7 @@
 
 ## 0.8.1 — 2026-10-07
 - 선택형 `/sangse wadiz import|plan|convert-jobs` 연결: 원본 카피·거래 조건·근거 자료를 덮어쓰지 않고 Wadiz 공통 규격으로 가져온다. 기존 명령과 제작 경로는 유지한다.
-- 브리지 사전 검사: Node >=20.9.0, 안정 버전 Wadiz 0.3.x 및 `release.json` schema 1이 아니면 실행을 차단한다. 검증된 설치 기준은 Wadiz v0.3.0이다. 브리지 자체는 유료 생성이나 자동 설치를 하지 않는다.
+- 브리지 사전 검사: Node >=22.0.0, 안정 버전 Wadiz 0.3.x 및 `release.json` schema 1이 아니면 실행을 차단한다. Node 20.9 실제 CI의 이미지 의존성 JSON import 구문 오류에 맞춰 신규 브리지 최소 버전을 22로 조정했다. 기존 Python·legacy 경로 조건은 유지하며 CI는 Linux/Windows × Node 22.0.0/24를 검사한다. 검증된 설치 기준은 Wadiz v0.3.0이다. 브리지 자체는 유료 생성이나 자동 설치를 하지 않는다.
 - contentscoin 전용 marketplace와 설치/업데이트 안내를 추가한다. setup은 포크의 출처를 확인하는 별도 업데이트 알림을 사용하고 기존 upstream 공유 updater·저작권·예시 출처를 보존한다.
 - setup의 새 SessionStart 배열 등록 누락을 수정하고 기존 upstream hook·다른 설정·손상된 설정 보존을 회귀 검사한다. 테스트 상태는 격리된 경로를 사용한다.
 - 윤문 승인 미리보기의 UTF-8 바이트와 SHA-256을 일치시켜 Windows 줄바꿈 변환으로 발생하던 승인 오류를 수정한다. 승인 계약과 최초 백업은 바꾸지 않는다.

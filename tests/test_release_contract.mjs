@@ -35,10 +35,11 @@ test('all advertised installation paths point at the fork and optional bridge do
     assert.match(text, /\/plugin marketplace add https:\/\/github\.com\/contentscoin\/sangse\.git/);
     assert.match(text, /\/plugin install sangse@contentscoin-sangse/);
     assert.match(text, /wadiz-bridge\.md/);
+    assert.match(text, /Node >=22\.0\.0/);
   }
   const docs = await read('skills/sangse/references/wadiz-bridge.md');
   assert.match(docs, /v0\.3\.0/);
-  assert.match(docs, /20\.9/);
+  assert.match(docs, /Node >=22\.0\.0/);
   assert.match(docs, /schema.*1|schema_version.*1/);
 });
 

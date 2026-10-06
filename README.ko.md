@@ -2,7 +2,7 @@
 
 # 상세 (sangse)
 
-이 저장소는 [fivetaku/sangse](https://github.com/fivetaku/sangse)를 기반으로 한 contentscoin 포크 **0.8.1**입니다. 원저자와 MIT 저작권 고지를 보존하고 기존 명령은 유지합니다. 카테고리·주제·상품별 기획, GPT Image 2.5·GIF 제작은 선택형 [Wadiz v0.3.0 브리지](skills/sangse/references/wadiz-bridge.md)(Node >=20.9.0, schema 1)로 연결합니다. 브리지는 구형 이미지 백엔드를 쓰거나 유료 생성을 호출하지 않습니다.
+이 저장소는 [fivetaku/sangse](https://github.com/fivetaku/sangse)를 기반으로 한 contentscoin 포크 **0.8.1**입니다. 원저자와 MIT 저작권 고지를 보존하고 기존 명령은 유지합니다. 카테고리·주제·상품별 기획, GPT Image 2.5·GIF 제작은 선택형 [Wadiz v0.3.0 브리지](skills/sangse/references/wadiz-bridge.md)(Node >=22.0.0, schema 1)로 연결합니다. 브리지는 구형 이미지 백엔드를 쓰거나 유료 생성을 호출하지 않습니다. Node 최소 버전은 신규 브리지에 적용하며 보존된 Python·legacy 명령의 조건은 바꾸지 않습니다.
 
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">

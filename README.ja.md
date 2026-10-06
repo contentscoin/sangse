@@ -2,7 +2,7 @@
 
 # sangse (상세)
 
-contentscoin フォーク **0.8.1**。原作者 [fivetaku/sangse](https://github.com/fivetaku/sangse) の MIT ライセンスと著作者表示を保持し、既存コマンドも維持します。カテゴリ・テーマ・商品別企画、GPT Image 2.5 と GIF 制作は任意の [Wadiz v0.3.0 ブリッジ](skills/sangse/references/wadiz-bridge.md)（Node >=20.9.0、schema 1）を使用します。ブリッジは旧画像バックエンドや有料生成を呼び出しません。
+contentscoin フォーク **0.8.1**。原作者 [fivetaku/sangse](https://github.com/fivetaku/sangse) の MIT ライセンスと著作者表示を保持し、既存コマンドも維持します。カテゴリ・テーマ・商品別企画、GPT Image 2.5 と GIF 制作は任意の [Wadiz v0.3.0 ブリッジ](skills/sangse/references/wadiz-bridge.md)（Node >=22.0.0、schema 1）を使用します。ブリッジは旧画像バックエンドや有料生成を呼び出しません。Node の最低バージョンは新しいブリッジの要件であり、既存の Python・旧コマンドには追加しません。
 
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">

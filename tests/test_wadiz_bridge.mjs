@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { assertBridgeRuntime, bridgeCommand, checkWadizRelease, resolveWadizScript } from '../skills/sangse/scripts/wadiz-bridge.mjs';
+import { assertBridgeRuntime, bridgeCommand, bridgeCompatibility, checkWadizRelease, resolveWadizScript } from '../skills/sangse/scripts/wadiz-bridge.mjs';
 
-const compatibleRelease = { name: 'wadiz-detail-page-production', version: '0.3.0', schema_version: 1, node: '>=20.9.0' };
+const compatibleRelease = { name: 'wadiz-detail-page-production', version: '0.3.0', schema_version: 1, node: '>=22.0.0' };
 async function fixture(t, script = 'import-sangse.mjs', relativeRoot = '') {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'wadiz-bridge-'));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
@@ -36,8 +36,10 @@ test('CODEX_HOME default installed layout works without changing the original ar
 });
 
 test('Node runtime minimum is explicit and checked before invoking a production script', () => {
-  for (const version of ['18.20.0', '20.8.9', 'invalid']) assert.throws(() => assertBridgeRuntime(version), /Node >=20.9.0/);
-  for (const version of ['20.9.0', '20.10.0', '22.0.0', '24.3.0']) assert.doesNotThrow(() => assertBridgeRuntime(version));
+  assert.equal(bridgeCompatibility.node, '>=22.0.0');
+  for (const version of ['18.20.0', '20.9.0', '20.19.0', '21.0.0', '21.99.99', 'invalid']) assert.throws(() => assertBridgeRuntime(version), /Node >=22\.0\.0/);
+  for (const version of ['22.0.0', '22.1.0', '24.0.0', '24.3.0']) assert.doesNotThrow(() => assertBridgeRuntime(version));
+  assert.throws(() => resolveWadizScript('/no-script-must-start', 'import', { nodeVersion: '21.99.99' }), /Node >=22\.0\.0/);
 });
 
 test('a script without readable release metadata is not treated as a compatible installation', async t => {

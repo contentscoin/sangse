@@ -8,12 +8,12 @@ import { pathToFileURL } from 'node:url';
 
 const actions = { import: 'import-sangse.mjs', 'convert-jobs': 'convert-legacy-jobs.mjs', plan: 'compile-page-plan.mjs' };
 
-export const bridgeCompatibility = Object.freeze({ wadiz: '0.3.x', schema_version: 1, node: '>=20.9.0' });
+export const bridgeCompatibility = Object.freeze({ wadiz: '0.3.x', schema_version: 1, node: '>=22.0.0' });
 
 export function assertBridgeRuntime(nodeVersion = process.versions.node) {
   const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(nodeVersion);
-  if (!match || Number(match[1]) < 20 || (Number(match[1]) === 20 && Number(match[2]) < 9)) {
-    throw new Error(`Wadiz bridge requires Node >=20.9.0; current version is ${nodeVersion}. No production command was started.`);
+  if (!match || Number(match[1]) < 22) {
+    throw new Error(`Wadiz bridge requires Node >=22.0.0; current version is ${nodeVersion}. No production command was started.`);
   }
 }
 
@@ -56,7 +56,7 @@ export function bridgeCommand(argv, env = process.env) {
 
 export function main(argv) {
   if (!argv.length || argv[0] === '--help' || argv[0] === 'help') {
-    console.log('Usage: node wadiz-bridge.mjs import <sangse-project> --out <new-dir> [--category <id>] [--topic <id>] [--wadiz-skill <folder>]\n       node wadiz-bridge.mjs convert-jobs <legacy.json> --out <new.json> [--backend codex_native|ima2] [--wadiz-skill <folder>]\n       node wadiz-bridge.mjs plan <product-brief.json> --out <new-dir> [--style <id>] [--wadiz-skill <folder>]\nWadiz is resolved from --wadiz-skill, WADIZ_SKILL_ROOT, or CODEX_HOME/skills/wadiz-detail-page-production. Preflight requires stable Wadiz 0.3.x with release.json schema_version 1 and Node >=20.9.0. These commands do not generate images or install dependencies.');
+    console.log('Usage: node wadiz-bridge.mjs import <sangse-project> --out <new-dir> [--category <id>] [--topic <id>] [--wadiz-skill <folder>]\n       node wadiz-bridge.mjs convert-jobs <legacy.json> --out <new.json> [--backend codex_native|ima2] [--wadiz-skill <folder>]\n       node wadiz-bridge.mjs plan <product-brief.json> --out <new-dir> [--style <id>] [--wadiz-skill <folder>]\nWadiz is resolved from --wadiz-skill, WADIZ_SKILL_ROOT, or CODEX_HOME/skills/wadiz-detail-page-production. Preflight requires stable Wadiz 0.3.x with release.json schema_version 1 and Node >=22.0.0. These commands do not generate images or install dependencies.');
     return 0;
   }
   const command = bridgeCommand(argv);

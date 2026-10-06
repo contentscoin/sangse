@@ -2,7 +2,7 @@
 
 # sangse (상세)
 
-Fork de contentscoin **0.8.1**, basado en [fivetaku/sangse](https://github.com/fivetaku/sangse), conservando el autor, la licencia MIT y los comandos existentes. La planificación por categoría, tema y producto, GPT Image 2.5 y GIF se conectan mediante el [puente opcional Wadiz v0.3.0](skills/sangse/references/wadiz-bridge.md) (Node >=20.9.0, schema 1). El puente no llama al backend antiguo ni genera contenido de pago.
+Fork de contentscoin **0.8.1**, basado en [fivetaku/sangse](https://github.com/fivetaku/sangse), conservando el autor, la licencia MIT y los comandos existentes. La planificación por categoría, tema y producto, GPT Image 2.5 y GIF se conectan mediante el [puente opcional Wadiz v0.3.0](skills/sangse/references/wadiz-bridge.md) (Node >=22.0.0, schema 1). El puente no llama al backend antiguo ni genera contenido de pago. El mínimo de Node se aplica al puente nuevo, no a los comandos Python y antiguos conservados.
 
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">

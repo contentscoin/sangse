@@ -2,7 +2,7 @@
 
 # sangse (상세)
 
-这是 contentscoin 分支 **0.8.1**，基于 [fivetaku/sangse](https://github.com/fivetaku/sangse)，保留原作者、MIT 版权声明和原有命令。按类别、主题和商品规划页面以及 GPT Image 2.5、GIF 制作，请使用可选的 [Wadiz v0.3.0 桥接](skills/sangse/references/wadiz-bridge.md)（Node >=20.9.0，schema 1）。桥接不调用旧图片后端或付费生成。
+这是 contentscoin 分支 **0.8.1**，基于 [fivetaku/sangse](https://github.com/fivetaku/sangse)，保留原作者、MIT 版权声明和原有命令。按类别、主题和商品规划页面以及 GPT Image 2.5、GIF 制作，请使用可选的 [Wadiz v0.3.0 桥接](skills/sangse/references/wadiz-bridge.md)（Node >=22.0.0，schema 1）。桥接不调用旧图片后端或付费生成。Node 最低版本仅适用于新桥接，不改变原有 Python 和旧命令的运行条件。
 
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">
