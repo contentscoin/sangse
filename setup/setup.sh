@@ -16,12 +16,13 @@
 set -uo pipefail
 
 PLUGIN="sangse"
-OWN_REPO="fivetaku/sangse"
+OWN_REPO="contentscoin/sangse"
+# Retained upstream hub for the optional legacy image backend and attribution.
 HUB_REPO="fivetaku/gptaku_plugins"
 
 CONFIG_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
-MARKER_DIR="$HOME/.gptaku-setup"
+MARKER_DIR="${SANGSE_SETUP_STATE_DIR:-$HOME/.contentscoin-sangse-setup}"
 SETUP_MARKER="$MARKER_DIR/$PLUGIN.json"
 STAR_MARKER="$MARKER_DIR/$PLUGIN.star.json"
 mkdir -p "$MARKER_DIR"
@@ -106,7 +107,7 @@ if [ ! -f "$SETUP_MARKER" ]; then
   if [ "$HAVE_NODE" = "1" ]; then
     SCRIPTS_DIR="$CONFIG_DIR/scripts"
     mkdir -p "$SCRIPTS_DIR"
-    [ -f "$HERE/gptaku-update-check.cjs" ] && cp -f "$HERE/gptaku-update-check.cjs" "$SCRIPTS_DIR/gptaku-update-check.cjs" 2>/dev/null
+    [ -f "$HERE/contentscoin-update-check.cjs" ] && cp -f "$HERE/contentscoin-update-check.cjs" "$SCRIPTS_DIR/contentscoin-update-check.cjs" 2>/dev/null
     CLAUDE_CONFIG_DIR="$CONFIG_DIR" node -e '
       const fs=require("fs"),path=require("path"),os=require("os");
       const cfg=process.env.CLAUDE_CONFIG_DIR||path.join(os.homedir(),".claude");
@@ -124,13 +125,14 @@ if [ ! -f "$SETUP_MARKER" ]; then
       if(typeof d!=="object"||d===null||Array.isArray(d)) process.exit(0);
       d.hooks=d.hooks||{};
       const ss=d.hooks.SessionStart=Array.isArray(d.hooks.SessionStart)?d.hooks.SessionStart:[];
-      const has=ss.some(e=>((e&&e.hooks)||[]).some(h=>String((h&&h.command)||"").includes("gptaku-update-check")));
+      const has=ss.some(e=>((e&&e.hooks)||[]).some(h=>String((h&&h.command)||"").includes("contentscoin-update-check")));
       if(!has){
-        const cmd="node "+JSON.stringify(path.join(cfg,"scripts","gptaku-update-check.cjs"));
+        const cmd="node "+JSON.stringify(path.join(cfg,"scripts","contentscoin-update-check.cjs"));
         ss.push({matcher:"*",hooks:[{type:"command",command:cmd,timeout:5}]});
+        d.hooks.SessionStart=ss;
         // 임시파일 + rename으로 원자적 쓰기(부분 쓰기로 인한 파손 방지)
         try{
-          const tmp=p+".tmp-gptaku-"+process.pid;
+          const tmp=p+".tmp-contentscoin-sangse-"+process.pid;
           fs.writeFileSync(tmp,JSON.stringify(d,null,2));
           fs.renameSync(tmp,p);
         }catch{}

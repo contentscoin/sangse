@@ -1,0 +1,13 @@
+{
+  "name": "contentscoin-sangse",
+  "description": "contentscoin's MIT-preserving Sangse fork with optional Wadiz production integration",
+  "owner": { "name": "contentscoin", "url": "https://github.com/contentscoin" },
+  "plugins": [
+    {
+      "name": "sangse",
+      "source": "./",
+      "version": "0.8.1",
+      "description": "Sangse with the optional Wadiz 0.3.x planning and production bridge"
+    }
+  ]
+}

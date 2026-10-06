@@ -1,6 +1,15 @@
 # Changelog
 
-> 릴리스 절차(버전 bump → GitHub 릴리스 → 마켓 서브모듈 포인터 → 캐시)는 gptaku_plugins의 [PLUGIN_STANDARD.md](https://github.com/fivetaku/gptaku_plugins/blob/main/PLUGIN_STANDARD.md)를 따른다. bump 전 `bash tests/test-gates.sh` PASS 필수.
+> 이 contentscoin 포크는 `.claude-plugin/plugin.json`과 자체 marketplace 버전을 함께 올린 뒤 테스트·태그·GitHub 릴리스를 수행한다. 설치/업데이트 정본은 [contentscoin/sangse](https://github.com/contentscoin/sangse)이며, 원저자 fivetaku의 MIT 저작권 고지를 유지한다. 기본 실행 경로는 보존한다. 릴리스 전 `bash tests/test-gates.sh`와 플랫폼별 core CI 검증이 필요하다. 아래 이전 릴리스 내역은 upstream 기록이다.
+
+## 0.8.1 — 2026-10-07
+- 선택형 `/sangse wadiz import|plan|convert-jobs` 연결: 원본 카피·거래 조건·근거 자료를 덮어쓰지 않고 Wadiz 공통 규격으로 가져온다. 기존 명령과 제작 경로는 유지한다.
+- 브리지 사전 검사: Node >=22.0.0, 안정 버전 Wadiz 0.3.x 및 `release.json` schema 1이 아니면 실행을 차단한다. Node 20.9 실제 CI의 이미지 의존성 JSON import 구문 오류에 맞춰 신규 브리지 최소 버전을 22로 조정했다. 기존 Python·legacy 경로 조건은 유지하며 CI는 Linux/Windows × Node 22.0.0/24를 검사한다. 검증된 설치 기준은 Wadiz v0.3.0이다. 브리지 자체는 유료 생성이나 자동 설치를 하지 않는다.
+- contentscoin 전용 marketplace와 설치/업데이트 안내를 추가한다. setup은 포크의 출처를 확인하는 별도 업데이트 알림을 사용하고 기존 upstream 공유 updater·저작권·예시 출처를 보존한다.
+- setup의 새 SessionStart 배열 등록 누락을 수정하고 기존 upstream hook·다른 설정·손상된 설정 보존을 회귀 검사한다. 테스트 상태는 격리된 경로를 사용한다.
+- 윤문 승인 미리보기의 UTF-8 바이트와 SHA-256을 일치시켜 Windows 줄바꿈 변환으로 발생하던 승인 오류를 수정한다. 승인 계약과 최초 백업은 바꾸지 않는다.
+- 기존 숫자 18건·윤문 승인 12건 회귀에 브리지·릴리스 출처 회귀를 연결하고 Linux/Windows core CI를 추가한다. 이미지 생성이나 원격 설치는 CI에서 실행하지 않는다.
+- Windows Git Bash의 Python Store alias와 셸 내장 경로 문제를 테스트 실행기에서 처리한다. 기존 게이트 판정·이미지 존재 검사는 유지한다.
 
 ## 0.8.0 — 2026-09-06
 - 정량 검증 계약 강화: 숫자 존재 여부 대신 문장·항목·단위·조건의 원문 일치 또는 위치별 검토 출처를 대조한다. `numerical-provenance.md`에 승인 형식과 의미·산술 검증의 한계를 명시했다.

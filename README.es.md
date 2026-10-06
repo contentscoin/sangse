@@ -2,6 +2,8 @@
 
 # sangse (상세)
 
+Fork de contentscoin **0.8.1**, basado en [fivetaku/sangse](https://github.com/fivetaku/sangse), conservando el autor, la licencia MIT y los comandos existentes. La planificación por categoría, tema y producto, GPT Image 2.5 y GIF se conectan mediante el [puente opcional Wadiz v0.3.0](skills/sangse/references/wadiz-bridge.md) (Node >=22.0.0, schema 1). El puente no llama al backend antiguo ni genera contenido de pago. El mínimo de Node se aplica al puente nuevo, no a los comandos Python y antiguos conservados.
+
 <p align="center">
   <img src="assets/sangse-hero-01.png" alt="sangse" width="320">
 </p>
@@ -21,17 +23,22 @@ Ejemplos en vivo (productos ficticios de alimentación saludable): https://fivet
 ### 1. Añade el marketplace (una sola vez)
 
 ```
-/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin marketplace add https://github.com/contentscoin/sangse.git
 ```
 
 ### 2. Instala
 
 ```
-/plugin install sangse
-/plugin install pumasi          # backend de generación de imágenes (/pumasi:image)
+/plugin install sangse@contentscoin-sangse
+
+# Solo para las imágenes del /sangse antiguo, no para el puente Wadiz:
+/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
+/plugin install pumasi@gptaku-plugins
 ```
 
 Reinicia Claude Code después de la instalación.
+
+Actualiza este fork con `/plugin marketplace update contentscoin-sangse`, después `/plugin update sangse@contentscoin-sangse` y reinicia. `sangse@gptaku-plugins` instala la versión original. Wadiz v0.3.0 se instala por separado; el puente rechaza versiones incompatibles.
 
 ### 3. Activa el backend de imágenes
 

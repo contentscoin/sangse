@@ -25,7 +25,13 @@ ok()   { PASS=$((PASS+1)); printf '  \033[0;32m✓\033[0m %s\n' "$1"; }
 bad()  { FAIL=$((FAIL+1)); printf '  \033[0;31m✗\033[0m %s\n     %s\n' "$1" "$2"; }
 skip() { SKIP=$((SKIP+1)); printf '  \033[0;33m-\033[0m %s (skip: %s)\n' "$1" "$2"; }
 
-command -v python3 >/dev/null 2>&1 || { echo "python3 필요"; exit 1; }
+# Git Bash on Windows can resolve python3 to a nonfunctional Store alias.
+# Probe the interpreter, then use a real python executable without changing PATH.
+if ! python3 -c 'import sys; assert sys.version_info >= (3, 10)' >/dev/null 2>&1; then
+  python -c 'import sys; assert sys.version_info >= (3, 10)' >/dev/null 2>&1 || { echo "Python >=3.10 필요"; exit 1; }
+  python3() { python "$@"; }
+  export -f python3
+fi
 
 echo
 echo "sangse 게이트 회귀"
@@ -179,6 +185,13 @@ else
   bad "윤문 승인 회귀" "위 실패 출력 참조"
 fi
 
+echo "[Wadiz 브리지·릴리스 출처 회귀 — Node >=22.0.0, 네트워크 없음]"
+if command -v node >/dev/null 2>&1 && node --test "$PLUGIN_DIR/tests/test_wadiz_bridge.mjs" "$PLUGIN_DIR/tests/test_release_contract.mjs"; then
+  ok "Wadiz 브리지 지원 버전·schema·Node·설치 출처 회귀"
+else
+  bad "Wadiz 브리지·릴리스 출처 회귀" "신규 Wadiz 브리지 테스트는 Node >=22.0.0 필요; 위 실패 출력 참조"
+fi
+
 if [[ "${SANGSE_RENDER_TESTS:-0}" == "1" ]]; then
   echo "[브라우저 렌더 회귀]"
   if python3 -m unittest discover -s "$PLUGIN_DIR/tests" -p 'test_render_contract.py' -v; then
@@ -204,7 +217,7 @@ for f in commands/sangse.md skills/sangse/SKILL.md; do
     ok "$f: frontmatter에 AskUserQuestion 없음"
   fi
 done
-v_json=$(python3 -c "import json;print(json.load(open('$PLUGIN_DIR/.claude-plugin/plugin.json'))['version'])")
+v_json=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["version"])' "$PLUGIN_DIR/.claude-plugin/plugin.json")
 if grep -q "^## $v_json " "$PLUGIN_DIR/CHANGELOG.md"; then
   ok "CHANGELOG.md에 plugin.json 버전 $v_json 항목 존재"
 else

@@ -1,13 +1,13 @@
 {
   "name": "sangse",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Korean e-commerce detail page builder — turns product facts into a verified image cut sheet (Kurly/Coupang/Smart Store style) with compliance filters and a 3-gate QA",
   "author": {
     "name": "chulrolee",
     "url": "https://github.com/fivetaku"
   },
-  "homepage": "https://fivetaku.github.io/sangse/",
-  "repository": "https://github.com/fivetaku/sangse",
+  "homepage": "https://github.com/contentscoin/sangse#readme",
+  "repository": "https://github.com/contentscoin/sangse",
   "license": "MIT",
   "keywords": [
     "detail-page",
